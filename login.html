@@ -1,119 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>PrimeShield Login</title>
+<meta charset="UTF-8">
+<title>PrimeShield Dashboard</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #0074d9, #00aaff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f4f7fb;
+}
 
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 350px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-        }
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  width: 220px;
+  height: 100%;
+  background: #0074d9;
+  padding-top: 20px;
+  color: white;
+}
 
-        h2 {
-            color: #0074d9;
-            margin-bottom: 20px;
-        }
+.sidebar h2 {
+  text-align: center;
+}
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
+.sidebar a {
+  display: block;
+  padding: 15px;
+  color: white;
+  text-decoration: none;
+}
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #0074d9;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.sidebar a:hover {
+  background: #005fa3;
+}
 
-        button:hover {
-            background: #005fa3;
-        }
+/* Main */
+.main {
+  margin-left: 220px;
+  padding: 20px;
+}
 
-        #dashboard {
-            display: none;
-            margin-top: 20px;
-        }
+/* Cards */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
 
-        iframe {
-            width: 100%;
-            height: 600px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
+/* Button */
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-        .link {
-            margin-top: 10px;
-            display: block;
-            color: #0074d9;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+.logout {
+  background: red;
+  color: white;
+}
+
+.login-btn {
+  width: 100%;
+  background: #0074d9;
+  color: white;
+}
+
+/* Login box */
+#loginBox {
+  width: 300px;
+  margin: 100px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+</style>
 </head>
 
 <body>
 
-<div class="container" id="loginBox">
-    <h2>Customer Login</h2>
-
-    <input type="email" id="email" placeholder="Enter your email">
-    <input type="password" id="password" placeholder="Enter your password">
-
-    <button id="loginBtn">Log In</button>
-
-    <a href="register.html" class="link">Create Account</a>
+<!-- LOGIN -->
+<div id="loginBox">
+  <h2>Customer Login</h2>
+  <input type="email" id="email" placeholder="Email"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button class="login-btn" id="loginBtn">Log In</button>
 </div>
 
-<!-- 🔥 Dashboard -->
-<div class="container" id="dashboard">
-    <h2>Welcome to Your Dashboard</h2>
-    <p>Submit your claim below:</p>
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none;">
 
-    <iframe src="https://form.jotform.com/260765348355061"></iframe>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>PrimeShield</h2>
+    <a href="#" onclick="showSection('home')">Dashboard</a>
+    <a href="#" onclick="showSection('claims')">Claims</a>
+    <a href="#" onclick="showSection('plan')">My Plan</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- HOME -->
+    <div id="home" class="card">
+      <h2>Welcome</h2>
+      <p id="userEmail"></p>
+      <p>Your coverage is active.</p>
+    </div>
+
+    <!-- CLAIMS -->
+    <div id="claims" class="card" style="display:none;">
+      <h2>Submit a Claim</h2>
+      <iframe src="https://form.jotform.com/260765348355061" 
+      style="width:100%; height:600px; border:none;"></iframe>
+    </div>
+
+    <!-- PLAN -->
+    <div id="plan" class="card" style="display:none;">
+      <h2>My Plan</h2>
+      <p>Plan: Basic Coverage</p>
+      <p>Status: Active</p>
+    </div>
+
+  </div>
+
 </div>
 
-<!-- 🔥 FIREBASE SCRIPT -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// 🔹 Firebase config
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCdGGUFIkocZmDcqb-lPPOzJiGC8nn5uYw",
   authDomain: "primeshield-77a71.firebaseapp.com",
   projectId: "primeshield-77a71",
   storageBucket: "primeshield-77a71.firebasestorage.app",
   messagingSenderId: "798331956070",
-  appId: "1:798331956070:web:4bed3f735e655c3cc1b6a7",
-  measurementId: "G-M6P8PK8JVL"
+  appId: "1:798331956070:web:4bed3f735e655c3cc1b6a7"
 };
 
-// 🔹 Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -121,43 +155,57 @@ const db = getFirestore(app);
 const loginBox = document.getElementById("loginBox");
 const dashboard = document.getElementById("dashboard");
 
-// 🔹 Login function
+// LOGIN
 async function login() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
 
-        // 🔐 Check purchase
-        const userDoc = await getDoc(doc(db, "users", email));
+    const userDoc = await getDoc(doc(db, "users", email));
 
-        if (userDoc.exists() && userDoc.data().purchased) {
-            loginBox.style.display = "none";
-            dashboard.style.display = "block";
-        } else {
-            alert("You must purchase a plan first.");
-        }
-
-    } catch (error) {
-        alert("Login failed: " + error.message);
+    if (userDoc.exists() && userDoc.data().purchased) {
+      loginBox.style.display = "none";
+      dashboard.style.display = "block";
+      document.getElementById("userEmail").innerText = "Logged in as: " + email;
+    } else {
+      alert("You must purchase a plan first.");
     }
+
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
-// 🔹 Button click
 document.getElementById("loginBtn").onclick = login;
 
-// 🔹 Keep user logged in
+// AUTO LOGIN
 onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.email));
+  if (user) {
+    const userDoc = await getDoc(doc(db, "users", user.email));
 
-        if (userDoc.exists() && userDoc.data().purchased) {
-            loginBox.style.display = "none";
-            dashboard.style.display = "block";
-        }
+    if (userDoc.exists() && userDoc.data().purchased) {
+      loginBox.style.display = "none";
+      dashboard.style.display = "block";
+      document.getElementById("userEmail").innerText = "Logged in as: " + user.email;
     }
+  }
 });
+
+// LOGOUT
+document.getElementById("logoutBtn").onclick = () => {
+  signOut(auth).then(() => location.reload());
+};
+
+// NAVIGATION
+window.showSection = function(section) {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("claims").style.display = "none";
+  document.getElementById("plan").style.display = "none";
+
+  document.getElementById(section).style.display = "block";
+};
 
 </script>
 
