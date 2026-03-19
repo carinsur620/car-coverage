@@ -1,16 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Create Account</title>
+  <meta charset="UTF-8">
+  <title>PrimeShield - Create Account</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #0074d9, #00aaff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h2 {
+      color: #0074d9;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    input:focus {
+      border-color: #0074d9;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0,116,217,0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #0074d9;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    .footer {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .footer a {
+      color: #0074d9;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
+
 <body>
 
-<h2>Create Your Account</h2>
+<div class="container">
+  <h2>Create Your Account</h2>
 
-<input type="email" id="email" placeholder="Email"><br><br>
-<input type="password" id="password" placeholder="Password"><br><br>
+  <input type="email" id="email" placeholder="Enter your email" required>
+  <input type="password" id="password" placeholder="Create a password" required>
 
-<button id="registerBtn">Register</button>
+  <button id="registerBtn">Register</button>
+
+  <div class="footer">
+    Already have an account? <a href="login.html">Log In</a>
+  </div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -38,13 +118,12 @@ async function register() {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
 
-    // 🔥 Automatically mark as purchased
     await setDoc(doc(db, "users", email), {
       purchased: true,
       plan: "basic"
     });
 
-    alert("Account created! You can now log in.");
+    alert("Account created successfully!");
     window.location.href = "login.html";
 
   } catch (error) {
