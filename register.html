@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PrimeShield Register</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrimeShield Registration</title>
 <style>
-body { font-family: Arial; background:#f4f7fb; }
-.register-box {
-  width: 350px; margin: 50px auto; background:white; padding:20px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-input { width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc; }
-button { width:100%; padding:10px; background:#0074d9; color:white; border:none; border-radius:6px; cursor:pointer; }
-button:hover { background:#005fa3; }
+body { font-family: Arial, sans-serif; background: linear-gradient(135deg,#0a2540,#0074d9); color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+.register-container { background: rgba(255,255,255,0.1); padding:40px; border-radius:15px; width:320px; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.5); }
+.register-container h2 { margin-bottom:20px; }
+.register-container input { width:100%; padding:12px; margin:10px 0; border-radius:8px; border:none; }
+.register-container button { width:100%; padding:12px; background:#ff6b6b; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; transition:0.3s; }
+.register-container button:hover { background:#ff4757; }
+.error { color:#ffaaaa; margin-bottom:10px; }
+.success { color:#aaffaa; margin-bottom:10px; }
 </style>
 </head>
-
 <body>
 
-<div class="register-box">
-  <h2>Register</h2>
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password (min 8 chars)">
-  <input type="text" id="registerCode" placeholder="Enter registration code">
-  <button id="registerBtn">Register</button>
+<div class="register-container">
+<h2>Register Your Account</h2>
+<div id="message"></div>
+<input type="email" id="email" placeholder="Email" required>
+<input type="password" id="password" placeholder="Password (min 6 chars)" required>
+<input type="text" id="code" placeholder="Registration Code" required>
+<button id="registerBtn">Register</button>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
+<script>
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCdGGUFIkocZmDcqb-lPPOzJiGC8nn5uYw",
@@ -39,59 +42,62 @@ const firebaseConfig = {
   appId: "1:798331956070:web:4bed3f735e655c3cc1b6a7"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-document.getElementById("registerBtn").onclick = async function() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const code = document.getElementById("registerCode").value.trim();
+// Get plan from URL
+const urlParams = new URLSearchParams(window.location.search);
+const plan = urlParams.get('plan');
 
-  // ✅ Validation
+// Registration code (from PayPal popup)
+const validCode = "PRIME123"; // Can be unique per user later
+
+document.getElementById('registerBtn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const code = document.getElementById('code').value.trim();
+  const messageDiv = document.getElementById('message');
+  messageDiv.innerHTML = '';
+
+  // Validation
   if (!email || !password || !code) {
-    alert("Please fill in all fields.");
+    messageDiv.innerHTML = '<div class="error">Please fill all fields.</div>';
     return;
   }
-
-  // Email format check
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    alert("Please enter a valid email address.");
+  if (password.length < 6) {
+    messageDiv.innerHTML = '<div class="error">Password must be at least 6 characters.</div>';
     return;
   }
-
-  // Password length check
-  if (password.length < 8) {
-    alert("Password must be at least 8 characters.");
-    return;
-  }
-
-  // Register code check
-  if (code !== "PRIME123") {
-    alert("Invalid registration code. Make sure you purchased a plan.");
+  if (code !== validCode) {
+    messageDiv.innerHTML = '<div class="error">Invalid registration code.</div>';
     return;
   }
 
   try {
     // Create user in Firebase Auth
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
 
-    // Save user data in Firestore
-    await setDoc(doc(db, "users", email), {
-      purchased: true,
+    // Save plan and paid status in Firestore
+    await db.collection('users').doc(userCredential.user.uid).set({
       email: email,
-      planCode: code,
-      createdAt: new Date()
+      plan: plan,
+      paid: true,
+      registrationCode: code
     });
 
-    alert("Registration successful! Redirecting to dashboard...");
-    window.location.href = "login.html"; // Redirect to your professional dashboard page
+    messageDiv.innerHTML = '<div class="success">Registration successful! Redirecting to dashboard...</div>';
+
+    // Redirect to dashboard after 2 seconds
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 2000);
 
   } catch (error) {
-    alert(error.message);
+    messageDiv.innerHTML = `<div class="error">${error.message}</div>`;
   }
-};
+});
 </script>
 
 </body>
