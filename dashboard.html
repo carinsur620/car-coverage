@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PrimeShield Dashboard</title>
 <style>
-body { margin:0; font-family:Arial,sans-serif; background:#f0f4f8; display:flex; }
-.sidebar { width:220px; background:#0a2540; color:white; height:100vh; position:fixed; display:flex; flex-direction:column; }
+/* General */
+body { margin:0; font-family:Arial,sans-serif; background:#f0f4f8; display:flex; flex-direction:row; }
+.sidebar { width:220px; background:#0a2540; color:white; height:100vh; position:fixed; display:flex; flex-direction:column; transition:0.3s; }
 .sidebar h2 { text-align:center; padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.2); }
 .sidebar a { color:white; text-decoration:none; padding:15px 20px; display:block; transition:0.3s; }
 .sidebar a:hover, .sidebar a.active { background:#0074d9; }
@@ -21,6 +22,21 @@ body { margin:0; font-family:Arial,sans-serif; background:#f0f4f8; display:flex;
 .plan-info ul { list-style:none; padding-left:0; }
 .plan-info ul li { margin:6px 0; }
 .claims iframe { width:100%; height:600px; border:none; border-radius:10px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  body { flex-direction:column; }
+  .sidebar { width:100%; height:auto; flex-direction:row; overflow-x:auto; }
+  .sidebar a { flex:1 0 auto; text-align:center; }
+  .main { margin-left:0; padding:20px; }
+  .slides img { height:200px; }
+}
+
+@media (max-width: 600px) {
+  .slides img { height:150px; }
+  .section { padding:10px 0; }
+  .main { padding:15px; }
+}
 </style>
 </head>
 <body>
