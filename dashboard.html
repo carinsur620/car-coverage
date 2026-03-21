@@ -3,106 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard - PrimeShield</title>
-
+<title>PrimeShield Dashboard</title>
 <style>
-body {
-  font-family: Arial;
-  margin:0;
-  background:#f4f6f9;
+/* General */
+body { margin:0; font-family:Arial,sans-serif; background:#f0f4f8; display:flex; flex-direction:row; }
+.sidebar { width:220px; background:#0a2540; color:white; height:100vh; position:fixed; display:flex; flex-direction:column; transition:0.3s; }
+.sidebar h2 { text-align:center; padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.2); }
+.sidebar a { color:white; text-decoration:none; padding:15px 20px; display:block; transition:0.3s; }
+.sidebar a:hover, .sidebar a.active { background:#0074d9; }
+.main { margin-left:220px; padding:30px; flex:1; overflow-y:auto; scroll-behavior:smooth; }
+.section { margin-bottom:50px; scroll-margin-top:40px; }
+.section h2 { color:#0a2540; margin-bottom:15px; border-bottom:2px solid #0074d9; padding-bottom:5px; display:inline-block; }
+.slider { width:100%; overflow:hidden; border-radius:15px; margin-bottom:20px; }
+.slides { display:flex; transition:transform 1s ease-in-out; }
+.slides img { width:100%; flex-shrink:0; height:300px; object-fit:cover; border-radius:15px; }
+.plan-info, .reviews, .settings { background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+.plan-info h3 { color:#0074d9; margin-bottom:10px; }
+.plan-info ul { list-style:none; padding-left:0; }
+.plan-info ul li { margin:6px 0; }
+.claims iframe { width:100%; height:600px; border:none; border-radius:10px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  body { flex-direction:column; }
+  .sidebar { width:100%; height:auto; flex-direction:row; overflow-x:auto; }
+  .sidebar a { flex:1 0 auto; text-align:center; }
+  .main { margin-left:0; padding:20px; }
+  .slides img { height:200px; }
 }
 
-header {
-  background:#0074d9;
-  color:white;
-  padding:15px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+@media (max-width: 600px) {
+  .slides img { height:150px; }
+  .section { padding:10px 0; }
+  .main { padding:15px; }
 }
-
-.container {
-  padding:20px;
-}
-
-.card {
-  background:white;
-  padding:20px;
-  border-radius:10px;
-  margin-bottom:15px;
-  box-shadow:0 5px 10px rgba(0,0,0,0.1);
-}
-
-button {
-  padding:10px 15px;
-  background:#ff4757;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-button:hover { background:#e84118; }
 </style>
 </head>
-
 <body>
 
-<header>
-<h2>PrimeShield Dashboard</h2>
-<button id="logoutBtn">Logout</button>
-</header>
-
-<div class="container">
-
-<div class="card">
-<h3>Welcome</h3>
-<p id="userEmail">Loading...</p>
+<div class="sidebar">
+<h2>PrimeShield</h2>
+<a href="#home" class="active">Home</a>
+<a href="#plan">My Plan</a>
+<a href="#claims">Claims</a>
+<a href="#reviews">Reviews</a>
+<a href="#settings">Settings</a>
 </div>
 
-<div class="card">
-<h3>Your Plan</h3>
-<p>Active coverage plan: <strong>Pending</strong></p>
+<div class="main">
+<div id="home" class="section">
+<h2>Welcome to Your Dashboard</h2>
+<p>Manage your coverage, submit claims, and view your plan details below.</p>
+<div class="slider">
+<div class="slides">
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70" alt="Car 1">
+<img src="https://images.unsplash.com/photo-1493238792000-8113da705763" alt="Car 2">
+<img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c" alt="Car 3">
+</div>
+</div>
 </div>
 
-<div class="card">
-<h3>Support</h3>
-<p>Email: supportautoshield@gmail.com</p>
-<p>Phone: 57169950</p>
+<div id="plan" class="section plan-info">
+<h2>My Plan</h2>
+<h3 id="userPlan">Loading your plan...</h3>
+<p id="planDetails">Fetching your plan info from Firebase...</p>
 </div>
 
+<div id="claims" class="section claims">
+<h2>Submit a Claim</h2>
+<iframe src="https://form.jotform.com/jsform/260765348355061"></iframe>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<div id="reviews" class="section reviews">
+<h2>Customer Reviews</h2>
+<p>⭐⭐⭐⭐⭐ "Amazing service! Got my claim approved fast." - John D.</p>
+<p>⭐⭐⭐⭐⭐ "Very reliable coverage, saved me thousands." - Maria S.</p>
+<p>⭐⭐⭐⭐⭐ "Best warranty service I’ve used." - Alex R.</p>
+</div>
 
+<div id="settings" class="section settings">
+<h2>Account Settings</h2>
+<p>Update email, change password, and manage your account settings here.</p>
+</div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+// Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyAEnNIYafp1h4qRADKi_Kx3RvXMfzxwlP4",
-  authDomain: "autoprotection-99453.firebaseapp.com",
-  projectId: "autoprotection-99453",
-  appId: "1:290645208750:web:e5015505c4697cc617073f"
+  apiKey: "AIzaSyCdGGUFIkocZmDcqb-lPPOzJiGC8nn5uYw",
+  authDomain: "primeshield-77a71.firebaseapp.com",
+  projectId: "primeshield-77a71",
+  storageBucket: "primeshield-77a71.firebasestorage.app",
+  messagingSenderId: "798331956070",
+  appId: "1:798331956070:web:4bed3f735e655c3cc1b6a7"
 };
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-// 🔐 Protect page
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    document.getElementById("userEmail").innerText = "Logged in as: " + user.email;
-  } else {
+// Auth check & fetch plan info
+auth.onAuthStateChanged(async (user) => {
+  if (!user) {
     alert("You must be logged in to access the dashboard.");
     window.location.href = "login.html";
+    return;
+  }
+  const doc = await db.collection('users').doc(user.uid).get();
+  if (doc.exists) {
+    const data = doc.data();
+    document.getElementById('userPlan').innerText = data.plan.charAt(0).toUpperCase() + data.plan.slice(1) + " Plan";
+    document.getElementById('planDetails').innerHTML = `
+      <ul>
+        <li>Plan: ${data.plan.charAt(0).toUpperCase() + data.plan.slice(1)}</li>
+        <li>Paid: ${data.paid ? "✅ Yes" : "❌ No"}</li>
+        <li>Registration Code: ${data.registrationCode}</li>
+      </ul>`;
+  } else {
+    document.getElementById('userPlan').innerText = "No plan found.";
+    document.getElementById('planDetails').innerText = "You need to purchase a plan first.";
   }
 });
 
-// 🔓 Logout
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await signOut(auth);
-  window.location.href = "login.html";
+// Car slider
+let slideIndex = 0;
+const slides = document.querySelector(".slides");
+const totalSlides = slides.children.length;
+function showNextSlide() {
+  slideIndex = (slideIndex + 1) % totalSlides;
+  slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+}
+setInterval(showNextSlide, 4000);
+
+// Smooth scrolling + sidebar active highlight
+const sidebarLinks = document.querySelectorAll('.sidebar a');
+sidebarLinks.forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    sidebarLinks.forEach(l => l.classList.remove('active'));
+    this.classList.add('active');
+    const target = document.querySelector(this.getAttribute('href'));
+    target.scrollIntoView({ behavior: 'smooth' });
+  });
 });
 </script>
-
 </body>
 </html>
