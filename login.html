@@ -231,7 +231,6 @@
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="navbar">
 
@@ -273,8 +272,6 @@
     </div>
   </header>
 
-
-  <!-- LOGIN -->
   <main class="login-section">
 
     <div class="login-card">
@@ -305,7 +302,6 @@
 
       </div>
 
-
       <form id="loginForm">
 
         <div class="form-group">
@@ -319,7 +315,6 @@
           >
         </div>
 
-
         <div class="form-group">
           <label for="password">Password</label>
 
@@ -331,7 +326,6 @@
           >
         </div>
 
-
         <button type="submit" id="loginButton">
           Sign In
         </button>
@@ -339,7 +333,6 @@
         <div class="error-message" id="errorMessage"></div>
 
       </form>
-
 
       <div class="register-link">
         Don't have an account?
@@ -354,8 +347,7 @@
 
   </main>
 
-
-  <!-- FIREBASE -->
+  <!-- NEW FIREBASE PROJECT -->
   <script type="module">
 
     import {
@@ -368,13 +360,15 @@
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
+    // NEW PrimeShield Firebase project
     const firebaseConfig = {
-      apiKey: "AIzaSyAEnNIYafp1h4qRADKi_Kx3RvXMfzxwlP4",
-      authDomain: "autoprotection-99453.firebaseapp.com",
-      projectId: "autoprotection-99453",
-      storageBucket: "autoprotection-99453.firebasestorage.app",
-      messagingSenderId: "290645208750",
-      appId: "1:290645208750:web:e5015505c4697cc617073f"
+      apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
+      authDomain: "carinsurance-784eb.firebaseapp.com",
+      projectId: "carinsurance-784eb",
+      storageBucket: "carinsurance-784eb.firebasestorage.app",
+      messagingSenderId: "181837106063",
+      appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
+      measurementId: "G-0X0VX4Q76R"
     };
 
 
@@ -395,6 +389,7 @@
       const password = document.getElementById("password").value;
 
       errorMessage.style.display = "none";
+
       loginButton.disabled = true;
       loginButton.textContent = "Signing In...";
 
@@ -413,7 +408,8 @@
 
         console.error(error);
 
-        let message = "Unable to sign in. Please check your email and password.";
+        let message =
+          "Unable to sign in. Please check your email and password.";
 
         if (
           error.code === "auth/invalid-credential" ||
@@ -424,7 +420,8 @@
         }
 
         if (error.code === "auth/too-many-requests") {
-          message = "Too many unsuccessful attempts. Please try again later.";
+          message =
+            "Too many unsuccessful attempts. Please try again later.";
         }
 
         errorMessage.textContent = message;
