@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,7 +105,6 @@
       color: white;
     }
 
-
     /* MAIN */
 
     .main {
@@ -132,7 +132,6 @@
       color: #6b7280;
       font-size: 14px;
     }
-
 
     /* CONTENT */
 
@@ -168,7 +167,6 @@
     .welcome-card p {
       opacity: 0.9;
     }
-
 
     /* CARDS */
 
@@ -214,7 +212,6 @@
       font-weight: 700;
     }
 
-
     /* PLAN */
 
     .plan-details {
@@ -251,7 +248,6 @@
       text-align: right;
     }
 
-
     /* CLAIMS */
 
     .claims-card {
@@ -283,7 +279,6 @@
       border: none;
     }
 
-
     /* REVIEWS */
 
     .review-card {
@@ -314,6 +309,9 @@
       font-weight: 700;
     }
 
+    .review-link:hover {
+      background: #1255b8;
+    }
 
     /* SETTINGS */
 
@@ -349,7 +347,6 @@
       color: #111827;
       font-weight: 600;
     }
-
 
     /* LOADING */
 
@@ -387,7 +384,6 @@
         transform: rotate(360deg);
       }
     }
-
 
     /* MOBILE */
 
@@ -434,10 +430,6 @@
         padding: 0 20px;
       }
 
-      .content {
-        padding: 20px;
-      }
-
       .user-email {
         display: none;
       }
@@ -482,6 +474,7 @@
       <a href="index.html" class="brand">
 
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
           <path
             d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
             fill="#1769e0"
@@ -500,6 +493,7 @@
             font-weight="bold"
             fill="#1769e0"
           >PS</text>
+
         </svg>
 
         PrimeShield
@@ -606,9 +600,11 @@
               <h3>Coverage Status</h3>
 
               <div style="margin: 12px 0;">
+
                 <span class="status" id="coverageStatus">
                   Checking...
                 </span>
+
               </div>
 
               <p>
@@ -648,7 +644,9 @@
 
             <h2>My Protection Plan</h2>
 
+
             <div class="detail-row">
+
               <span class="detail-label">
                 Plan
               </span>
@@ -659,10 +657,12 @@
               >
                 —
               </span>
+
             </div>
 
 
             <div class="detail-row">
+
               <span class="detail-label">
                 Registration Code
               </span>
@@ -673,10 +673,12 @@
               >
                 —
               </span>
+
             </div>
 
 
             <div class="detail-row">
+
               <span class="detail-label">
                 Account Email
               </span>
@@ -687,10 +689,12 @@
               >
                 —
               </span>
+
             </div>
 
 
             <div class="detail-row">
+
               <span class="detail-label">
                 Account Created
               </span>
@@ -701,10 +705,12 @@
               >
                 —
               </span>
+
             </div>
 
 
             <div class="detail-row">
+
               <span class="detail-label">
                 Coverage Status
               </span>
@@ -715,6 +721,7 @@
               >
                 —
               </span>
+
             </div>
 
           </div>
@@ -740,8 +747,7 @@
                 src="https://form.jotform.com/260765348355061"
                 title="PrimeShield Claims Form"
                 allow="geolocation; microphone; camera"
-              >
-              </iframe>
+              ></iframe>
 
             </div>
 
@@ -841,420 +847,45 @@
 
 
   <!-- FIREBASE -->
+  <script type="module">
 
-<script type="module">
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-  import {
-    initializeApp
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  import {
-    getAuth,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  import {
-    getFirestore,
-    doc,
-    getDoc
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+    /* NEW FIREBASE PROJECT */
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
-    authDomain: "carinsurance-784eb.firebaseapp.com",
-    projectId: "carinsurance-784eb",
-    storageBucket: "carinsurance-784eb.firebasestorage.app",
-    messagingSenderId: "181837106063",
-    appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
-    measurementId: "G-0X0VX4Q76R"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
+      authDomain: "carinsurance-784eb.firebaseapp.com",
+      projectId: "carinsurance-784eb",
+      storageBucket: "carinsurance-784eb.firebasestorage.app",
+      messagingSenderId: "181837106063",
+      appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
+      measurementId: "G-0X0VX4Q76R"
+    };
 
 
-  const app = initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
 
-  const auth = getAuth(app);
+    const auth = getAuth(app);
 
-  const db = getFirestore(app);
+    const db = getFirestore(app);
 
 
-  /*
-    PLAN NAMES
-  */
-
-  const planNames = {
-    PRIME123: "Basic Plan",
-    PRIME456: "Standard Plan",
-    PRIME789: "Premium Plan"
-  };
-
-
-  /*
-    PLAN PRICES
-  */
-
-  const planPrices = {
-    PRIME123: "$299",
-    PRIME456: "$499",
-    PRIME789: "$799"
-  };
-
-
-  /*
-    NAVIGATION
-  */
-
-  const navButtons =
-    document.querySelectorAll(".nav-button");
-
-  const sections =
-    document.querySelectorAll(".section");
-
-  const pageTitle =
-    document.getElementById("pageTitle");
-
-
-  navButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      const sectionName =
-        button.dataset.section;
-
-
-      navButtons.forEach(btn =>
-        btn.classList.remove("active")
-      );
-
-      button.classList.add("active");
-
-
-      sections.forEach(section =>
-        section.classList.remove("active")
-      );
-
-
-      document
-        .getElementById(sectionName)
-        .classList.add("active");
-
-
-      const titles = {
-        home: "Customer Dashboard",
-        plan: "My Plan",
-        claims: "Claims",
-        reviews: "Reviews",
-        settings: "Account Settings"
-      };
-
-
-      pageTitle.textContent =
-        titles[sectionName];
-
-
-      document
-        .getElementById("sidebar")
-        .classList.remove("open");
-
-    });
-
-  });
-
-
-  /*
-    MOBILE MENU
-  */
-
-  document
-    .getElementById("mobileMenu")
-    .addEventListener("click", () => {
-
-      document
-        .getElementById("sidebar")
-        .classList.toggle("open");
-
-    });
-
-
-  /*
-    LOGOUT
-  */
-
-  document
-    .getElementById("logoutButton")
-    .addEventListener("click", async () => {
-
-      try {
-
-        await signOut(auth);
-
-        window.location.href = "login.html";
-
-      } catch (error) {
-
-        console.error(error);
-
-      }
-
-    });
-
-
-  /*
-    AUTHENTICATION
-  */
-
-  onAuthStateChanged(auth, async (user) => {
-
-    if (!user) {
-
-      window.location.href = "login.html";
-
-      return;
-
-    }
-
-
-    document.getElementById("userEmail").textContent =
-      user.email || "";
-
-
-    document.getElementById("planEmail").textContent =
-      user.email || "—";
-
-
-    document.getElementById("settingsEmail").textContent =
-      user.email || "—";
-
-
-    try {
-
-      const userRef =
-        doc(db, "users", user.uid);
-
-      const userSnapshot =
-        await getDoc(userRef);
-
-
-      if (!userSnapshot.exists()) {
-
-        document.getElementById("homePlan").textContent =
-          "No plan found";
-
-        document.getElementById("homeCode").textContent =
-          "—";
-
-        document.getElementById("coverageStatus").textContent =
-          "Pending";
-
-        document.getElementById("planName").textContent =
-          "No plan found";
-
-        document.getElementById("planCode").textContent =
-          "—";
-
-        document.getElementById("planStatus").textContent =
-          "Pending";
-
-        document.getElementById("settingsStatus").textContent =
-          "Account active";
-
-        document.getElementById("loadingScreen").style.display =
-          "none";
-
-        return;
-
-      }
-
-
-      const data =
-        userSnapshot.data();
-
-
-      /*
-        BLOCKED ACCOUNT CHECK
-      */
-
-      if (data.blocked === true) {
-
-        alert(
-          "Your account has been restricted. Please contact PrimeShield support."
-        );
-
-        await signOut(auth);
-
-        window.location.href = "login.html";
-
-        return;
-
-      }
-
-
-      const registrationCode =
-        data.registrationCode
-          ? String(data.registrationCode).toUpperCase()
-          : (data.planCode
-              ? String(data.planCode).toUpperCase()
-              : "");
-
-
-      const planName =
-        planNames[registrationCode] || "PrimeShield Plan";
-
-
-      const planPrice =
-        planPrices[registrationCode] || "";
-
-
-      /*
-        CREATED DATE
-      */
-
-      let createdDate = "—";
-
-      if (data.createdAt) {
-
-        if (
-          typeof data.createdAt.toDate === "function"
-        ) {
-
-          createdDate =
-            data.createdAt.toDate().toLocaleDateString();
-
-        } else {
-
-          const date =
-            new Date(data.createdAt);
-
-          if (!isNaN(date.getTime())) {
-
-            createdDate =
-              date.toLocaleDateString();
-
-          }
-
-        }
-
-      }
-
-
-      /*
-        30-DAY WAITING PERIOD
-      */
-
-      let coverageActive = true;
-
-      if (data.createdAt) {
-
-        let createdTime = null;
-
-
-        if (
-          typeof data.createdAt.toDate === "function"
-        ) {
-
-          createdTime =
-            data.createdAt.toDate().getTime();
-
-        } else {
-
-          const parsedDate =
-            new Date(data.createdAt);
-
-          if (!isNaN(parsedDate.getTime())) {
-
-            createdTime =
-              parsedDate.getTime();
-
-          }
-
-        }
-
-
-        if (createdTime) {
-
-          const daysPassed =
-            (Date.now() - createdTime)
-            / (1000 * 60 * 60 * 24);
-
-          coverageActive =
-            daysPassed >= 30;
-
-        }
-
-      }
-
-
-      /*
-        DISPLAY PLAN
-      */
-
-      document.getElementById("homePlan").textContent =
-        planPrice
-          ? `${planName} — ${planPrice}`
-          : planName;
-
-
-      document.getElementById("homeCode").textContent =
-        registrationCode || "—";
-
-
-      document.getElementById("planName").textContent =
-        planPrice
-          ? `${planName} — ${planPrice}`
-          : planName;
-
-
-      document.getElementById("planCode").textContent =
-        registrationCode || "—";
-
-
-      document.getElementById("createdDate").textContent =
-        createdDate;
-
-
-      document.getElementById("planStatus").textContent =
-        coverageActive
-          ? "Active"
-          : "Waiting Period";
-
-
-      document.getElementById("coverageStatus").textContent =
-        coverageActive
-          ? "Active"
-          : "Waiting Period";
-
-
-      document.getElementById("settingsCode").textContent =
-        registrationCode || "—";
-
-
-      document.getElementById("settingsStatus").textContent =
-        coverageActive
-          ? "Active"
-          : "Waiting Period";
-
-
-      document.getElementById("loadingScreen").style.display =
-        "none";
-
-
-    } catch (error) {
-
-      console.error(
-        "Error loading account:",
-        error
-      );
-
-
-      document.getElementById("loadingScreen").style.display =
-        "none";
-
-    }
-
-  });
-
-</script>
     /*
       PLAN NAMES
     */
@@ -1302,6 +933,7 @@
         navButtons.forEach(btn =>
           btn.classList.remove("active")
         );
+
 
         button.classList.add("active");
 
@@ -1369,7 +1001,7 @@
 
         } catch (error) {
 
-          console.error(error);
+          console.error("Logout error:", error);
 
         }
 
@@ -1408,40 +1040,48 @@
         const userRef =
           doc(db, "users", user.uid);
 
+
         const userSnapshot =
           await getDoc(userRef);
 
 
-        if (!userSnapshot.exists()) {
+        /*
+          NO FIRESTORE PROFILE
+        */
 
-          /*
-            The Firebase Auth account exists,
-            but no Firestore user profile exists yet.
-          */
+        if (!userSnapshot.exists()) {
 
           document.getElementById("homePlan").textContent =
             "No plan found";
 
+
           document.getElementById("homeCode").textContent =
             "—";
+
 
           document.getElementById("coverageStatus").textContent =
             "Pending";
 
+
           document.getElementById("planName").textContent =
             "No plan found";
+
 
           document.getElementById("planCode").textContent =
             "—";
 
+
           document.getElementById("planStatus").textContent =
             "Pending";
+
 
           document.getElementById("settingsStatus").textContent =
             "Account active";
 
+
           document.getElementById("loadingScreen").style.display =
             "none";
+
 
           return;
 
@@ -1462,27 +1102,45 @@
             "Your account has been restricted. Please contact PrimeShield support."
           );
 
+
           await signOut(auth);
 
-          window.location.href = "login.html";
+
+          window.location.href =
+            "login.html";
+
 
           return;
 
         }
 
 
+        /*
+          REGISTRATION CODE
+          
+          Supports both:
+          registrationCode
+          and planCode
+        */
+
         const registrationCode =
           data.registrationCode
             ? String(data.registrationCode).toUpperCase()
-            : "";
+            : (
+                data.planCode
+                  ? String(data.planCode).toUpperCase()
+                  : ""
+              );
 
 
         const planName =
-          planNames[registrationCode] || "PrimeShield Plan";
+          planNames[registrationCode] ||
+          "PrimeShield Plan";
 
 
         const planPrice =
-          planPrices[registrationCode] || "";
+          planPrices[registrationCode] ||
+          "";
 
 
         /*
@@ -1491,6 +1149,7 @@
 
         let createdDate = "—";
 
+
         if (data.createdAt) {
 
           if (
@@ -1498,16 +1157,21 @@
           ) {
 
             createdDate =
-              data.createdAt.toDate().toLocaleDateString();
+              data.createdAt
+                .toDate()
+                .toLocaleDateString();
 
           } else {
 
             const date =
               new Date(data.createdAt);
 
+
             if (!isNaN(date.getTime())) {
+
               createdDate =
                 date.toLocaleDateString();
+
             }
 
           }
@@ -1521,25 +1185,32 @@
 
         let coverageActive = true;
 
+
         if (data.createdAt) {
 
           let createdTime = null;
+
 
           if (
             typeof data.createdAt.toDate === "function"
           ) {
 
             createdTime =
-              data.createdAt.toDate().getTime();
+              data.createdAt
+                .toDate()
+                .getTime();
 
           } else {
 
             const parsedDate =
               new Date(data.createdAt);
 
+
             if (!isNaN(parsedDate.getTime())) {
+
               createdTime =
                 parsedDate.getTime();
+
             }
 
           }
@@ -1550,6 +1221,7 @@
             const daysPassed =
               (Date.now() - createdTime)
               / (1000 * 60 * 60 * 24);
+
 
             coverageActive =
               daysPassed >= 30;
@@ -1609,6 +1281,10 @@
             : "Waiting Period";
 
 
+        /*
+          HIDE LOADING SCREEN
+        */
+
         document.getElementById("loadingScreen").style.display =
           "none";
 
@@ -1632,3 +1308,4 @@
 
 </body>
 </html>
+```
