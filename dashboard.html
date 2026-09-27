@@ -1,197 +1,1256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PrimeShield Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard | PrimeShield</title>
 
-<style>
-body { margin:0; font-family:Arial,sans-serif; background:#f0f4f8; display:flex; flex-direction:row; }
-.sidebar { width:220px; background:#0a2540; color:white; height:100vh; position:fixed; display:flex; flex-direction:column; transition:0.3s; }
-.sidebar h2 { text-align:center; padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.2); }
-.sidebar a { color:white; text-decoration:none; padding:15px 20px; display:block; transition:0.3s; }
-.sidebar a:hover, .sidebar a.active { background:#0074d9; }
-.main { margin-left:220px; padding:30px; flex:1; overflow-y:auto; scroll-behavior:smooth; }
-.section { margin-bottom:50px; scroll-margin-top:40px; }
-.section h2 { color:#0a2540; margin-bottom:15px; border-bottom:2px solid #0074d9; padding-bottom:5px; display:inline-block; }
-.slider { width:100%; overflow:hidden; border-radius:15px; margin-bottom:20px; }
-.slides { display:flex; transition:transform 1s ease-in-out; }
-.slides img { width:100%; flex-shrink:0; height:300px; object-fit:cover; border-radius:15px; }
-.plan-info, .reviews, .settings { background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
-.plan-info h3 { color:#0074d9; margin-bottom:10px; }
-.plan-info ul { list-style:none; padding-left:0; }
-.plan-info ul li { margin:6px 0; }
-.claims iframe { width:100%; height:600px; border:none; border-radius:10px; }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-@media (max-width: 900px) {
-  body { flex-direction:column; }
-  .sidebar { width:100%; height:auto; flex-direction:row; overflow-x:auto; }
-  .sidebar a { flex:1 0 auto; text-align:center; }
-  .main { margin-left:0; padding:20px; }
-  .slides img { height:200px; }
-}
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+      min-height: 100vh;
+    }
 
-@media (max-width: 600px) {
-  .slides img { height:150px; }
-  .section { padding:10px 0; }
-  .main { padding:15px; }
-}
-</style>
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 250px;
+      background: #111827;
+      color: white;
+      padding: 25px 18px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 800;
+      padding: 0 10px 30px;
+      border-bottom: 1px solid #374151;
+    }
+
+    .brand svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .sidebar-nav {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .sidebar-nav button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: #d1d5db;
+      text-align: left;
+      padding: 13px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .sidebar-nav button:hover,
+    .sidebar-nav button.active {
+      background: #1d4ed8;
+      color: white;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+    }
+
+    .logout-btn {
+      width: 100%;
+      border: 1px solid #4b5563;
+      background: transparent;
+      color: #d1d5db;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .logout-btn:hover {
+      background: #374151;
+      color: white;
+    }
+
+
+    /* MAIN */
+
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 75px;
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 35px;
+    }
+
+    .topbar h1 {
+      font-size: 22px;
+      color: #111827;
+    }
+
+    .user-email {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+
+    /* CONTENT */
+
+    .content {
+      padding: 35px;
+      max-width: 1300px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .welcome-card {
+      background:
+        linear-gradient(rgba(8, 25, 50, 0.76), rgba(8, 25, 50, 0.76)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85")
+        center/cover no-repeat;
+      color: white;
+      padding: 40px;
+      border-radius: 14px;
+      margin-bottom: 25px;
+    }
+
+    .welcome-card h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .welcome-card p {
+      opacity: 0.9;
+    }
+
+
+    /* CARDS */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .card h3 {
+      font-size: 17px;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .plan-price {
+      font-size: 30px;
+      font-weight: 800;
+      color: #1769e0;
+      margin: 10px 0;
+    }
+
+    .status {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+
+    /* PLAN */
+
+    .plan-details {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 30px;
+    }
+
+    .plan-details h2 {
+      color: #111827;
+      margin-bottom: 20px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: #6b7280;
+    }
+
+    .detail-value {
+      color: #111827;
+      font-weight: 700;
+      text-align: right;
+    }
+
+
+    /* CLAIMS */
+
+    .claims-card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .claims-card h2 {
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .claims-card p {
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
+
+    .jotform-container {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .jotform-container iframe {
+      width: 100%;
+      min-height: 850px;
+      border: none;
+    }
+
+
+    /* REVIEWS */
+
+    .review-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 30px;
+      max-width: 750px;
+    }
+
+    .review-card h2 {
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .review-card p {
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .review-link {
+      display: inline-block;
+      background: #1769e0;
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+
+    /* SETTINGS */
+
+    .settings-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 30px;
+      max-width: 700px;
+    }
+
+    .settings-card h2 {
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .setting-row {
+      padding: 16px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .setting-row:last-child {
+      border-bottom: none;
+    }
+
+    .setting-label {
+      color: #6b7280;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .setting-value {
+      color: #111827;
+      font-weight: 600;
+    }
+
+
+    /* LOADING */
+
+    #loadingScreen {
+      position: fixed;
+      inset: 0;
+      background: #f5f7fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5000;
+    }
+
+    .loading-box {
+      text-align: center;
+    }
+
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 4px solid #dbeafe;
+      border-top-color: #1769e0;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    .loading-box p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+
+    /* MOBILE */
+
+    .mobile-menu {
+      display: none;
+      border: none;
+      background: #1769e0;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    @media (max-width: 1000px) {
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 800px) {
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: 0.25s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .topbar {
+        padding: 0 20px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .user-email {
+        display: none;
+      }
+
+      .welcome-card {
+        padding: 28px;
+      }
+
+      .welcome-card h2 {
+        font-size: 25px;
+      }
+
+      .detail-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .detail-value {
+        text-align: left;
+      }
+
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-<h2>PrimeShield</h2>
-<a href="#home" class="active">Home</a>
-<a href="#plan">My Plan</a>
-<a href="#claims">Claims</a>
-<a href="#reviews">Reviews</a>
-<a href="#settings">Settings</a>
-</div>
+  <!-- LOADING -->
+  <div id="loadingScreen">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <p>Loading your account...</p>
+    </div>
+  </div>
 
-<div class="main">
 
-<div id="home" class="section">
-<h2>Welcome to Your Dashboard</h2>
-<p>Manage your coverage, submit claims, and view your plan details below.</p>
+  <div class="dashboard">
 
-<div class="slider">
-<div class="slides">
-<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
-<img src="https://images.unsplash.com/photo-1493238792000-8113da705763">
-<img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c">
-</div>
-</div>
-</div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
 
-<div id="plan" class="section plan-info">
-<h2>My Plan</h2>
-<h3 id="userPlan">Loading your plan...</h3>
-<p id="planDetails">Fetching your plan info...</p>
-</div>
+      <a href="index.html" class="brand">
 
-<div id="claims" class="section claims">
-<h2>Submit a Claim</h2>
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
+            fill="#1769e0"
+          />
 
-<!-- ✅ FIXED JOTFORM -->
-<iframe src="https://form.jotform.com/260765348355061"></iframe>
+          <path
+            d="M50 16 L78 27 V48 C78 65 67 77 50 84 C33 77 22 65 22 48 V27 Z"
+            fill="#ffffff"
+          />
 
-</div>
+          <text
+            x="50"
+            y="58"
+            text-anchor="middle"
+            font-size="25"
+            font-weight="bold"
+            fill="#1769e0"
+          >PS</text>
+        </svg>
 
-<div id="reviews" class="section reviews">
-<h2>Customer Reviews</h2>
-<p>⭐⭐⭐⭐⭐ "Amazing service! Got my claim approved fast." - John D.</p>
-<p>⭐⭐⭐⭐⭐ "Very reliable coverage, saved me thousands." - Maria S.</p>
-<p>⭐⭐⭐⭐⭐ "Best warranty service I’ve used." - Alex R.</p>
-</div>
+        PrimeShield
 
-<div id="settings" class="section settings">
-<h2>Account Settings</h2>
-<p>Update email, change password, and manage your account settings here.</p>
-</div>
+      </a>
 
-</div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+      <div class="sidebar-nav">
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyAEnNIYafp1h4qRADKi_Kx3RvXMfzxwlP4",
-  authDomain: "autoprotection-99453.firebaseapp.com",
-  projectId: "autoprotection-99453",
-  storageBucket: "autoprotection-99453.firebasestorage.app",
-  messagingSenderId: "290645208750",
-  appId: "1:290645208750:web:e5015505c4697cc617073f"
-};
+        <button class="nav-button active" data-section="home">
+          🏠 Home
+        </button>
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+        <button class="nav-button" data-section="plan">
+          📋 My Plan
+        </button>
 
-// ✅ FIXED AUTH + DATA LOAD
-auth.onAuthStateChanged(async (user) => {
-  if (!user) {
-    alert("You must be logged in to access the dashboard.");
-    window.location.href = "login.html";
-    return;
-  }
+        <button class="nav-button" data-section="claims">
+          🛠️ Claims
+        </button>
 
-  try {
-    const docSnap = await db.collection("users").doc(user.uid).get();
+        <button class="nav-button" data-section="reviews">
+          ⭐ Reviews
+        </button>
 
-    if (docSnap.exists) {
-      const data = docSnap.data();
+        <button class="nav-button" data-section="settings">
+          ⚙️ Settings
+        </button>
 
-      // BLOCK CHECK
-      if (data.blocked) {
-        alert("Your account is blocked.");
-        auth.signOut();
+      </div>
+
+
+      <div class="sidebar-bottom">
+
+        <button class="logout-btn" id="logoutButton">
+          Sign Out
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <div class="topbar">
+
+        <button class="mobile-menu" id="mobileMenu">
+          ☰
+        </button>
+
+        <h1 id="pageTitle">
+          Customer Dashboard
+        </h1>
+
+        <div class="user-email" id="userEmail">
+          Loading...
+        </div>
+
+      </div>
+
+
+      <div class="content">
+
+
+        <!-- HOME -->
+        <section class="section active" id="home">
+
+          <div class="welcome-card">
+
+            <h2>Welcome to PrimeShield</h2>
+
+            <p>
+              Manage your vehicle protection plan, submit claims,
+              and review your account information.
+            </p>
+
+          </div>
+
+
+          <div class="cards">
+
+            <div class="card">
+
+              <h3>Current Plan</h3>
+
+              <div
+                class="plan-price"
+                id="homePlan"
+              >
+                —
+              </div>
+
+              <p>
+                Your active PrimeShield protection plan.
+              </p>
+
+            </div>
+
+
+            <div class="card">
+
+              <h3>Coverage Status</h3>
+
+              <div style="margin: 12px 0;">
+                <span class="status" id="coverageStatus">
+                  Checking...
+                </span>
+              </div>
+
+              <p>
+                Current status of your account coverage.
+              </p>
+
+            </div>
+
+
+            <div class="card">
+
+              <h3>Registration Code</h3>
+
+              <div
+                class="plan-price"
+                id="homeCode"
+                style="font-size: 21px;"
+              >
+                —
+              </div>
+
+              <p>
+                Your PrimeShield registration code.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- MY PLAN -->
+        <section class="section" id="plan">
+
+          <div class="plan-details">
+
+            <h2>My Protection Plan</h2>
+
+            <div class="detail-row">
+              <span class="detail-label">
+                Plan
+              </span>
+
+              <span
+                class="detail-value"
+                id="planName"
+              >
+                —
+              </span>
+            </div>
+
+
+            <div class="detail-row">
+              <span class="detail-label">
+                Registration Code
+              </span>
+
+              <span
+                class="detail-value"
+                id="planCode"
+              >
+                —
+              </span>
+            </div>
+
+
+            <div class="detail-row">
+              <span class="detail-label">
+                Account Email
+              </span>
+
+              <span
+                class="detail-value"
+                id="planEmail"
+              >
+                —
+              </span>
+            </div>
+
+
+            <div class="detail-row">
+              <span class="detail-label">
+                Account Created
+              </span>
+
+              <span
+                class="detail-value"
+                id="createdDate"
+              >
+                —
+              </span>
+            </div>
+
+
+            <div class="detail-row">
+              <span class="detail-label">
+                Coverage Status
+              </span>
+
+              <span
+                class="detail-value"
+                id="planStatus"
+              >
+                —
+              </span>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- CLAIMS -->
+        <section class="section" id="claims">
+
+          <div class="claims-card">
+
+            <h2>Submit a Claim</h2>
+
+            <p>
+              Use the form below to submit your vehicle protection claim.
+              Provide accurate information to help with the review process.
+            </p>
+
+            <div class="jotform-container">
+
+              <iframe
+                src="https://form.jotform.com/260765348355061"
+                title="PrimeShield Claims Form"
+                allow="geolocation; microphone; camera"
+              >
+              </iframe>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- REVIEWS -->
+        <section class="section" id="reviews">
+
+          <div class="review-card">
+
+            <h2>PrimeShield Reviews</h2>
+
+            <p>
+              Have you used PrimeShield? Share your experience
+              with our team.
+            </p>
+
+            <a
+              href="testimonials.html"
+              class="review-link"
+            >
+              Leave a Review
+            </a>
+
+          </div>
+
+        </section>
+
+
+        <!-- SETTINGS -->
+        <section class="section" id="settings">
+
+          <div class="settings-card">
+
+            <h2>Account Settings</h2>
+
+
+            <div class="setting-row">
+
+              <div class="setting-label">
+                Email Address
+              </div>
+
+              <div
+                class="setting-value"
+                id="settingsEmail"
+              >
+                —
+              </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+              <div class="setting-label">
+                Registration Code
+              </div>
+
+              <div
+                class="setting-value"
+                id="settingsCode"
+              >
+                —
+              </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+              <div class="setting-label">
+                Account Status
+              </div>
+
+              <div
+                class="setting-value"
+                id="settingsStatus"
+              >
+                —
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- FIREBASE -->
+  <script type="module">
+
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAEnNIYafp1h4qRADKi_Kx3RvXMfzxwlP4",
+      authDomain: "autoprotection-99453.firebaseapp.com",
+      projectId: "autoprotection-99453",
+      storageBucket: "autoprotection-99453.firebasestorage.app",
+      messagingSenderId: "290645208750",
+      appId: "1:290645208750:web:e5015505c4697cc617073f"
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+    const db = getFirestore(app);
+
+
+    /*
+      PLAN NAMES
+    */
+
+    const planNames = {
+      PRIME123: "Basic Plan",
+      PRIME456: "Standard Plan",
+      PRIME789: "Premium Plan"
+    };
+
+
+    /*
+      PLAN PRICES
+    */
+
+    const planPrices = {
+      PRIME123: "$299",
+      PRIME456: "$499",
+      PRIME789: "$799"
+    };
+
+
+    /*
+      NAVIGATION
+    */
+
+    const navButtons =
+      document.querySelectorAll(".nav-button");
+
+    const sections =
+      document.querySelectorAll(".section");
+
+    const pageTitle =
+      document.getElementById("pageTitle");
+
+
+    navButtons.forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const sectionName =
+          button.dataset.section;
+
+
+        navButtons.forEach(btn =>
+          btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+
+        sections.forEach(section =>
+          section.classList.remove("active")
+        );
+
+
+        document
+          .getElementById(sectionName)
+          .classList.add("active");
+
+
+        const titles = {
+          home: "Customer Dashboard",
+          plan: "My Plan",
+          claims: "Claims",
+          reviews: "Reviews",
+          settings: "Account Settings"
+        };
+
+
+        pageTitle.textContent =
+          titles[sectionName];
+
+
+        document
+          .getElementById("sidebar")
+          .classList.remove("open");
+
+      });
+
+    });
+
+
+    /*
+      MOBILE MENU
+    */
+
+    document
+      .getElementById("mobileMenu")
+      .addEventListener("click", () => {
+
+        document
+          .getElementById("sidebar")
+          .classList.toggle("open");
+
+      });
+
+
+    /*
+      LOGOUT
+    */
+
+    document
+      .getElementById("logoutButton")
+      .addEventListener("click", async () => {
+
+        try {
+
+          await signOut(auth);
+
+          window.location.href = "login.html";
+
+        } catch (error) {
+
+          console.error(error);
+
+        }
+
+      });
+
+
+    /*
+      AUTHENTICATION
+    */
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+
         window.location.href = "login.html";
+
         return;
+
       }
 
-      // DATE FIX
-      let created = new Date();
-      if (data.createdAt) {
-        created = data.createdAt.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+
+      document.getElementById("userEmail").textContent =
+        user.email || "";
+
+
+      document.getElementById("planEmail").textContent =
+        user.email || "—";
+
+
+      document.getElementById("settingsEmail").textContent =
+        user.email || "—";
+
+
+      try {
+
+        const userRef =
+          doc(db, "users", user.uid);
+
+        const userSnapshot =
+          await getDoc(userRef);
+
+
+        if (!userSnapshot.exists()) {
+
+          /*
+            The Firebase Auth account exists,
+            but no Firestore user profile exists yet.
+          */
+
+          document.getElementById("homePlan").textContent =
+            "No plan found";
+
+          document.getElementById("homeCode").textContent =
+            "—";
+
+          document.getElementById("coverageStatus").textContent =
+            "Pending";
+
+          document.getElementById("planName").textContent =
+            "No plan found";
+
+          document.getElementById("planCode").textContent =
+            "—";
+
+          document.getElementById("planStatus").textContent =
+            "Pending";
+
+          document.getElementById("settingsStatus").textContent =
+            "Account active";
+
+          document.getElementById("loadingScreen").style.display =
+            "none";
+
+          return;
+
+        }
+
+
+        const data =
+          userSnapshot.data();
+
+
+        /*
+          BLOCKED ACCOUNT CHECK
+        */
+
+        if (data.blocked === true) {
+
+          alert(
+            "Your account has been restricted. Please contact PrimeShield support."
+          );
+
+          await signOut(auth);
+
+          window.location.href = "login.html";
+
+          return;
+
+        }
+
+
+        const registrationCode =
+          data.registrationCode
+            ? String(data.registrationCode).toUpperCase()
+            : "";
+
+
+        const planName =
+          planNames[registrationCode] || "PrimeShield Plan";
+
+
+        const planPrice =
+          planPrices[registrationCode] || "";
+
+
+        /*
+          CREATED DATE
+        */
+
+        let createdDate = "—";
+
+        if (data.createdAt) {
+
+          if (
+            typeof data.createdAt.toDate === "function"
+          ) {
+
+            createdDate =
+              data.createdAt.toDate().toLocaleDateString();
+
+          } else {
+
+            const date =
+              new Date(data.createdAt);
+
+            if (!isNaN(date.getTime())) {
+              createdDate =
+                date.toLocaleDateString();
+            }
+
+          }
+
+        }
+
+
+        /*
+          30-DAY WAITING PERIOD
+        */
+
+        let coverageActive = true;
+
+        if (data.createdAt) {
+
+          let createdTime = null;
+
+          if (
+            typeof data.createdAt.toDate === "function"
+          ) {
+
+            createdTime =
+              data.createdAt.toDate().getTime();
+
+          } else {
+
+            const parsedDate =
+              new Date(data.createdAt);
+
+            if (!isNaN(parsedDate.getTime())) {
+              createdTime =
+                parsedDate.getTime();
+            }
+
+          }
+
+
+          if (createdTime) {
+
+            const daysPassed =
+              (Date.now() - createdTime)
+              / (1000 * 60 * 60 * 24);
+
+            coverageActive =
+              daysPassed >= 30;
+
+          }
+
+        }
+
+
+        /*
+          DISPLAY PLAN
+        */
+
+        document.getElementById("homePlan").textContent =
+          planPrice
+            ? `${planName} — ${planPrice}`
+            : planName;
+
+
+        document.getElementById("homeCode").textContent =
+          registrationCode || "—";
+
+
+        document.getElementById("planName").textContent =
+          planPrice
+            ? `${planName} — ${planPrice}`
+            : planName;
+
+
+        document.getElementById("planCode").textContent =
+          registrationCode || "—";
+
+
+        document.getElementById("createdDate").textContent =
+          createdDate;
+
+
+        document.getElementById("planStatus").textContent =
+          coverageActive
+            ? "Active"
+            : "Waiting Period";
+
+
+        document.getElementById("coverageStatus").textContent =
+          coverageActive
+            ? "Active"
+            : "Waiting Period";
+
+
+        document.getElementById("settingsCode").textContent =
+          registrationCode || "—";
+
+
+        document.getElementById("settingsStatus").textContent =
+          coverageActive
+            ? "Active"
+            : "Waiting Period";
+
+
+        document.getElementById("loadingScreen").style.display =
+          "none";
+
+
+      } catch (error) {
+
+        console.error(
+          "Error loading account:",
+          error
+        );
+
+
+        document.getElementById("loadingScreen").style.display =
+          "none";
+
       }
 
-      const now = new Date();
-      const diffDays = (now - created) / (1000 * 60 * 60 * 24);
+    });
 
-      let status = "✅ Active";
-      if (diffDays > 30) status = "❌ Expired";
-
-      document.getElementById("userPlan").innerText =
-        data.plan ? data.plan.charAt(0).toUpperCase() + data.plan.slice(1) + " Plan" : "No plan";
-
-      document.getElementById("planDetails").innerHTML = `
-        <ul>
-          <li><strong>Plan:</strong> ${data.plan || "N/A"}</li>
-          <li><strong>Status:</strong> ${status}</li>
-          <li><strong>Code:</strong> ${data.registrationCode || "N/A"}</li>
-        </ul>
-      `;
-    } else {
-      document.getElementById("userPlan").innerText = "No plan found.";
-      document.getElementById("planDetails").innerText =
-        "You need to purchase and register first.";
-    }
-
-  } catch (error) {
-    console.error(error);
-    document.getElementById("planDetails").innerText =
-      "Error loading data.";
-  }
-});
-
-// Slider
-let slideIndex = 0;
-const slides = document.querySelector(".slides");
-const totalSlides = slides.children.length;
-
-function showNextSlide() {
-  slideIndex = (slideIndex + 1) % totalSlides;
-  slides.style.transform = `translateX(-${slideIndex * 100}%)`;
-}
-setInterval(showNextSlide, 4000);
-
-// Sidebar nav
-const sidebarLinks = document.querySelectorAll('.sidebar a');
-sidebarLinks.forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    sidebarLinks.forEach(l => l.classList.remove('active'));
-    this.classList.add('active');
-    const target = document.querySelector(this.getAttribute('href'));
-    target.scrollIntoView({ behavior: 'smooth' });
-  });
-});
-</script>
+  </script>
 
 </body>
 </html>
