@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Us | PrimeShield</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f5f7fa;
+    color: #172033;
+    line-height: 1.6;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+}
+
+.navbar {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 14px 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo-container {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    text-decoration: none;
+
+    color: #0b2545;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+.logo {
+    width: 45px;
+    height: 50px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 5px;
+}
+
+nav a {
+    text-decoration: none;
+
+    color: #334155;
+
+    font-weight: 600;
+
+    padding: 10px 13px;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+    background: #eaf3fb;
+
+    color: #1261a0;
+}
+
+.login-btn {
+    background: #1261a0;
+
+    color: white !important;
+}
+
+.login-btn:hover {
+    background: #0b4f88 !important;
+}
+
+/* =========================
+   PAGE HERO
+========================= */
+
+.page-hero {
+    background:
+        linear-gradient(
+            135deg,
+            #0b2545,
+            #1261a0
+        );
+
+    color: white;
+
+    text-align: center;
+
+    padding: 75px 20px;
+}
+
+.page-hero h1 {
+    font-size: 46px;
+
+    margin-bottom: 10px;
+}
+
+.page-hero p {
+    color: #dbeafe;
+
+    font-size: 18px;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.section {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 75px 25px;
+}
+
+.about-content {
+    max-width: 900px;
+
+    margin: auto;
+}
+
+.about-card {
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 17px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 12px 35px rgba(15,35,60,0.08);
+
+    margin-bottom: 25px;
+}
+
+.about-card h2 {
+    color: #0b2545;
+
+    font-size: 28px;
+
+    margin-bottom: 15px;
+}
+
+.about-card p {
+    color: #475569;
+
+    margin-bottom: 15px;
+}
+
+.about-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================
+   VALUES
+========================= */
+
+.values {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+
+    margin-top: 25px;
+}
+
+.value-card {
+    background: white;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 15px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(15,35,60,0.07);
+}
+
+.value-icon {
+    width: 55px;
+
+    height: 55px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #eaf3fb;
+
+    color: #1261a0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+.value-card h3 {
+    color: #0b2545;
+
+    margin-bottom: 10px;
+}
+
+.value-card p {
+    color: #64748b;
+
+    font-size: 15px;
+}
+
+/* =========================
+   CONTACT BOX
+========================= */
+
+.contact-box {
+    background:
+        linear-gradient(
+            135deg,
+            #0b2545,
+            #1261a0
+        );
+
+    color: white;
+
+    padding: 40px;
+
+    border-radius: 17px;
+
+    text-align: center;
+
+    margin-top: 25px;
+}
+
+.contact-box h2 {
+    margin-bottom: 10px;
+}
+
+.contact-box p {
+    color: #dbeafe;
+}
+
+.contact-box a {
+    color: white;
+
+    font-weight: bold;
+
+    text-decoration: none;
+}
+
+.contact-box a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #0b2545;
+
+    color: #dbe5ef;
+
+    margin-top: 40px;
+}
+
+.footer-container {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 40px 25px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    flex-wrap: wrap;
+}
+
+.footer-container h3 {
+    color: white;
+
+    margin-bottom: 10px;
+}
+
+.footer-container a {
+    color: #dbeafe;
+
+    text-decoration: none;
+}
+
+.footer-container a:hover {
+    text-decoration: underline;
+}
+
+.copyright {
+    width: 100%;
+
+    border-top: 1px solid rgba(255,255,255,0.15);
+
+    padding-top: 20px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 850px) {
+
+    .navbar {
+        flex-direction: column;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .page-hero h1 {
+        font-size: 38px;
+    }
+
+    .about-card {
+        padding: 28px;
+    }
+
+    .values {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER / NAVIGATION
+========================= -->
+
+<header>
+
+<div class="navbar">
+
+
+<a href="index.html"
+   class="logo-container">
+
+
+<svg class="logo"
+     xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 100 115">
+
+    <path
+        d="M50 4L91 18V52C91 79 75 99 50 111C25 99 9 79 9 52V18L50 4Z"
+        fill="#1261a0"/>
+
+    <path
+        d="M50 12L82 23V52C82 73 71 90 50 101C29 90 18 73 18 52V23L50 12Z"
+        fill="white"/>
+
+    <path
+        d="M50 25C40 34 32 38 25 40V52C25 67 33 79 50 89C67 79 75 67 75 52V40C68 38 60 34 50 25Z"
+        fill="#0b2545"/>
+
+    <text
+        x="50"
+        y="66"
+        text-anchor="middle"
+        font-family="Arial"
+        font-size="24"
+        font-weight="800"
+        fill="white">
+
+        PS
+
+    </text>
+
+</svg>
+
+
+PrimeShield
+
+</a>
+
+
+<nav>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="plans.html">
+Plans
+</a>
+
+<a href="testimonials.html">
+Reviews
+</a>
+
+<a href="about.html"
+   class="active">
+
+About
+
+</a>
+
+<a href="terms.html">
+Terms
+</a>
+
+<a href="contact.html">
+Contact
+</a>
+
+<a href="login.html"
+   class="login-btn">
+
+Customer Login
+
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<!-- =========================
+     PAGE HERO
+========================= -->
+
+<section class="page-hero">
+
+<h1>
+About PrimeShield
+</h1>
+
+<p>
+Vehicle protection focused on dependable customer service.
+</p>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section class="section">
+
+<div class="about-content">
+
+
+<div class="about-card">
+
+<h2>
+Our Mission
+</h2>
+
+<p>
+PrimeShield provides vehicle protection plans intended
+to help customers manage eligible repair costs and
+access support when they need it.
+</p>
+
+<p>
+We focus on clear plan information, accessible customer
+support, and a straightforward customer experience.
+</p>
+
+</div>
+
+
+<div class="about-card">
+
+<h2>
+Our Commitment
+</h2>
+
+<p>
+We believe customers should have a clear understanding
+of their vehicle protection plan before making a purchase.
+That's why PrimeShield provides information about
+available plans, coverage terms, customer support,
+and account access.
+</p>
+
+<p>
+Our goal is to make the customer experience simple,
+organized, and easy to navigate.
+</p>
+
+</div>
+
+
+<!-- =========================
+     VALUES
+========================= -->
+
+<div class="values">
+
+
+<div class="value-card">
+
+<div class="value-icon">
+✓
+</div>
+
+<h3>
+Transparency
+</h3>
+
+<p>
+We provide customers with plan information and
+coverage terms so they can review the details
+of their protection.
+</p>
+
+</div>
+
+
+<div class="value-card">
+
+<div class="value-icon">
+★
+</div>
+
+<h3>
+Customer Service
+</h3>
+
+<p>
+We aim to provide customers with accessible support
+when they have questions about their plans.
+</p>
+
+</div>
+
+
+<div class="value-card">
+
+<div class="value-icon">
+◆
+</div>
+
+<h3>
+Protection
+</h3>
+
+<p>
+Our plans are designed to provide protection for
+eligible vehicle repairs according to the applicable
+plan terms.
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<div class="contact-box">
+
+<h2>
+Need Assistance?
+</h2>
+
+<p>
+Our team is available to help with questions about
+PrimeShield plans and customer services.
+</p>
+
+<p style="margin-top:15px;">
+
+Email:
+<a href="mailto:ccsolutions133@gmail.com">
+ccsolutions133@gmail.com
+</a>
+
+</p>
+
+<p>
+
+Phone:
+<a href="tel:+50586475926">
++505 8647 5926
+</a>
+
+</p>
+
+<a
+href="contact.html"
+style="
+display:inline-block;
+margin-top:20px;
+background:white;
+color:#0b2545;
+padding:12px 22px;
+border-radius:8px;
+font-weight:bold;
+text-decoration:none;
+">
+
+Contact Us
+
+</a>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<div class="footer-container">
+
+
+<div>
+
+<h3>
+PrimeShield
+</h3>
+
+<p>
+Vehicle protection and warranty services.
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Contact
+</h3>
+
+<p>
+
+<a href="mailto:ccsolutions133@gmail.com">
+ccsolutions133@gmail.com
+</a>
+
+<br><br>
+
+<a href="tel:+50586475926">
++505 8647 5926
+</a>
+
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Customer
+</h3>
+
+<p>
+
+<a href="plans.html">
+Coverage Plans
+</a>
+
+<br>
+
+<a href="login.html">
+Customer Login
+</a>
+
+<br>
+
+<a href="terms.html">
+Terms & Conditions
+</a>
+
+</p>
+
+</div>
+
+
+<div class="copyright">
+
+© 2026 PrimeShield. All rights reserved.
+
+</div>
+
+
+</div>
+
+</footer>
+
+
+</body>
+</html>
