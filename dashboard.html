@@ -841,42 +841,420 @@
 
 
   <!-- FIREBASE -->
-  <script type="module">
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<script type="module">
 
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    import {
-      getFirestore,
-      doc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAEnNIYafp1h4qRADKi_Kx3RvXMfzxwlP4",
-      authDomain: "autoprotection-99453.firebaseapp.com",
-      projectId: "autoprotection-99453",
-      storageBucket: "autoprotection-99453.firebasestorage.app",
-      messagingSenderId: "290645208750",
-      appId: "1:290645208750:web:e5015505c4697cc617073f"
-    };
+  import {
+    getFirestore,
+    doc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-    const app = initializeApp(firebaseConfig);
+  const firebaseConfig = {
+    apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
+    authDomain: "carinsurance-784eb.firebaseapp.com",
+    projectId: "carinsurance-784eb",
+    storageBucket: "carinsurance-784eb.firebasestorage.app",
+    messagingSenderId: "181837106063",
+    appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
+    measurementId: "G-0X0VX4Q76R"
+  };
 
-    const auth = getAuth(app);
 
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+
+  const auth = getAuth(app);
+
+  const db = getFirestore(app);
 
 
+  /*
+    PLAN NAMES
+  */
+
+  const planNames = {
+    PRIME123: "Basic Plan",
+    PRIME456: "Standard Plan",
+    PRIME789: "Premium Plan"
+  };
+
+
+  /*
+    PLAN PRICES
+  */
+
+  const planPrices = {
+    PRIME123: "$299",
+    PRIME456: "$499",
+    PRIME789: "$799"
+  };
+
+
+  /*
+    NAVIGATION
+  */
+
+  const navButtons =
+    document.querySelectorAll(".nav-button");
+
+  const sections =
+    document.querySelectorAll(".section");
+
+  const pageTitle =
+    document.getElementById("pageTitle");
+
+
+  navButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const sectionName =
+        button.dataset.section;
+
+
+      navButtons.forEach(btn =>
+        btn.classList.remove("active")
+      );
+
+      button.classList.add("active");
+
+
+      sections.forEach(section =>
+        section.classList.remove("active")
+      );
+
+
+      document
+        .getElementById(sectionName)
+        .classList.add("active");
+
+
+      const titles = {
+        home: "Customer Dashboard",
+        plan: "My Plan",
+        claims: "Claims",
+        reviews: "Reviews",
+        settings: "Account Settings"
+      };
+
+
+      pageTitle.textContent =
+        titles[sectionName];
+
+
+      document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    });
+
+  });
+
+
+  /*
+    MOBILE MENU
+  */
+
+  document
+    .getElementById("mobileMenu")
+    .addEventListener("click", () => {
+
+      document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+    });
+
+
+  /*
+    LOGOUT
+  */
+
+  document
+    .getElementById("logoutButton")
+    .addEventListener("click", async () => {
+
+      try {
+
+        await signOut(auth);
+
+        window.location.href = "login.html";
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    });
+
+
+  /*
+    AUTHENTICATION
+  */
+
+  onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+      window.location.href = "login.html";
+
+      return;
+
+    }
+
+
+    document.getElementById("userEmail").textContent =
+      user.email || "";
+
+
+    document.getElementById("planEmail").textContent =
+      user.email || "—";
+
+
+    document.getElementById("settingsEmail").textContent =
+      user.email || "—";
+
+
+    try {
+
+      const userRef =
+        doc(db, "users", user.uid);
+
+      const userSnapshot =
+        await getDoc(userRef);
+
+
+      if (!userSnapshot.exists()) {
+
+        document.getElementById("homePlan").textContent =
+          "No plan found";
+
+        document.getElementById("homeCode").textContent =
+          "—";
+
+        document.getElementById("coverageStatus").textContent =
+          "Pending";
+
+        document.getElementById("planName").textContent =
+          "No plan found";
+
+        document.getElementById("planCode").textContent =
+          "—";
+
+        document.getElementById("planStatus").textContent =
+          "Pending";
+
+        document.getElementById("settingsStatus").textContent =
+          "Account active";
+
+        document.getElementById("loadingScreen").style.display =
+          "none";
+
+        return;
+
+      }
+
+
+      const data =
+        userSnapshot.data();
+
+
+      /*
+        BLOCKED ACCOUNT CHECK
+      */
+
+      if (data.blocked === true) {
+
+        alert(
+          "Your account has been restricted. Please contact PrimeShield support."
+        );
+
+        await signOut(auth);
+
+        window.location.href = "login.html";
+
+        return;
+
+      }
+
+
+      const registrationCode =
+        data.registrationCode
+          ? String(data.registrationCode).toUpperCase()
+          : (data.planCode
+              ? String(data.planCode).toUpperCase()
+              : "");
+
+
+      const planName =
+        planNames[registrationCode] || "PrimeShield Plan";
+
+
+      const planPrice =
+        planPrices[registrationCode] || "";
+
+
+      /*
+        CREATED DATE
+      */
+
+      let createdDate = "—";
+
+      if (data.createdAt) {
+
+        if (
+          typeof data.createdAt.toDate === "function"
+        ) {
+
+          createdDate =
+            data.createdAt.toDate().toLocaleDateString();
+
+        } else {
+
+          const date =
+            new Date(data.createdAt);
+
+          if (!isNaN(date.getTime())) {
+
+            createdDate =
+              date.toLocaleDateString();
+
+          }
+
+        }
+
+      }
+
+
+      /*
+        30-DAY WAITING PERIOD
+      */
+
+      let coverageActive = true;
+
+      if (data.createdAt) {
+
+        let createdTime = null;
+
+
+        if (
+          typeof data.createdAt.toDate === "function"
+        ) {
+
+          createdTime =
+            data.createdAt.toDate().getTime();
+
+        } else {
+
+          const parsedDate =
+            new Date(data.createdAt);
+
+          if (!isNaN(parsedDate.getTime())) {
+
+            createdTime =
+              parsedDate.getTime();
+
+          }
+
+        }
+
+
+        if (createdTime) {
+
+          const daysPassed =
+            (Date.now() - createdTime)
+            / (1000 * 60 * 60 * 24);
+
+          coverageActive =
+            daysPassed >= 30;
+
+        }
+
+      }
+
+
+      /*
+        DISPLAY PLAN
+      */
+
+      document.getElementById("homePlan").textContent =
+        planPrice
+          ? `${planName} — ${planPrice}`
+          : planName;
+
+
+      document.getElementById("homeCode").textContent =
+        registrationCode || "—";
+
+
+      document.getElementById("planName").textContent =
+        planPrice
+          ? `${planName} — ${planPrice}`
+          : planName;
+
+
+      document.getElementById("planCode").textContent =
+        registrationCode || "—";
+
+
+      document.getElementById("createdDate").textContent =
+        createdDate;
+
+
+      document.getElementById("planStatus").textContent =
+        coverageActive
+          ? "Active"
+          : "Waiting Period";
+
+
+      document.getElementById("coverageStatus").textContent =
+        coverageActive
+          ? "Active"
+          : "Waiting Period";
+
+
+      document.getElementById("settingsCode").textContent =
+        registrationCode || "—";
+
+
+      document.getElementById("settingsStatus").textContent =
+        coverageActive
+          ? "Active"
+          : "Waiting Period";
+
+
+      document.getElementById("loadingScreen").style.display =
+        "none";
+
+
+    } catch (error) {
+
+      console.error(
+        "Error loading account:",
+        error
+      );
+
+
+      document.getElementById("loadingScreen").style.display =
+        "none";
+
+    }
+
+  });
+
+</script>
     /*
       PLAN NAMES
     */
