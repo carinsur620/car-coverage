@@ -1,49 +1,508 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Us</title>
-<style>
-body {font-family:Arial; margin:0; background:#f2f6ff;}
-header {background:#0b4ea2; color:white; text-align:center; padding:25px;}
-nav {background:#083a7a; text-align:center; padding:12px;}
-nav a {color:white; margin:15px; text-decoration:none; font-weight:bold;}
-nav a:hover {color:#9cc9ff;}
-.card {background:white; max-width:600px; margin:30px auto; padding:25px; border-radius:8px; box-shadow:0 3px 10px rgba(0,0,0,0.2);}
-footer {background:#083a7a; color:white; text-align:center; padding:20px;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | PrimeShield</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #111827;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .logo svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #1769e0;
+    }
+
+    .login-btn {
+      background: #1769e0;
+      color: white !important;
+      padding: 10px 17px;
+      border-radius: 7px;
+    }
+
+    .login-btn:hover {
+      background: #0f56bd;
+    }
+
+    .page-hero {
+      background:
+        linear-gradient(rgba(8, 25, 50, 0.78), rgba(8, 25, 50, 0.78)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85")
+        center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 90px 20px;
+    }
+
+    .page-hero h1 {
+      font-size: 46px;
+      margin-bottom: 12px;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .contact-container {
+      max-width: 1000px;
+      margin: 55px auto;
+      padding: 0 20px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .contact-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 35px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .contact-card h2 {
+      color: #111827;
+      margin-bottom: 12px;
+      font-size: 24px;
+    }
+
+    .contact-card > p {
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
+
+    .contact-item {
+      margin-bottom: 22px;
+    }
+
+    .contact-item h3 {
+      font-size: 16px;
+      color: #111827;
+      margin-bottom: 5px;
+    }
+
+    .contact-item p {
+      color: #4b5563;
+    }
+
+    .contact-item a {
+      color: #1769e0;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact-item a:hover {
+      text-decoration: underline;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      margin-top: 6px;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #1769e0;
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.1);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      background: #1769e0;
+      color: white;
+      padding: 13px 20px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #0f56bd;
+    }
+
+    .notice {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background: #ecfdf5;
+      color: #047857;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      margin-top: 70px;
+      padding: 40px 20px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand h3 {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      max-width: 400px;
+      font-size: 14px;
+    }
+
+    .footer-contact h4 {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-contact p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .footer-contact a {
+      color: #d1d5db;
+      text-decoration: none;
+    }
+
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #374151;
+      margin-top: 30px;
+      padding-top: 20px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 800px) {
+      .navbar {
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .page-hero h1 {
+        font-size: 36px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-<h1>Contact PrimeShield</h1>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="navbar">
 
-<nav>
-<a href="index.html">Home</a>
-<a href="plans.html">Coverage Plans</a>
-<a href="login.html">Customer Login</a>
-<a href="testimonials.html">Reviews</a>
-<a href="contract.html">Contract</a>
-<a href="contact.html">Contact</a>
-</nav>
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
+            fill="#1769e0"
+          />
+          <path
+            d="M50 16 L78 27 V48 C78 65 67 77 50 84 C33 77 22 65 22 48 V27 Z"
+            fill="#ffffff"
+          />
+          <text
+            x="50"
+            y="58"
+            text-anchor="middle"
+            font-size="25"
+            font-weight="bold"
+            fill="#1769e0"
+          >PS</text>
+        </svg>
 
-<div class="card">
-<h3>Address</h3>
-<p>123 Warranty Service Drive</p>
-<p>Dallas, TX</p>
+        PrimeShield
+      </a>
 
-<h3>Email</h3>
-<p>autosupport67@gmail.com</p>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="plans.html">Plans</a>
+        <a href="testimonials.html">Reviews</a>
+        <a href="about.html">About</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="login.html" class="login-btn">Customer Login</a>
+      </nav>
 
-<h3>Phone</h3>
-<p>(505) 5716-9950</p>
-</div>
+    </div>
+  </header>
 
-<footer>
-<p>© 2026 PrimeShield Factory Warranty</p>
-</footer>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <h1>Contact PrimeShield</h1>
+    <p>We're here to help with your questions and support needs.</p>
+  </section>
+
+
+  <!-- CONTACT -->
+  <main class="contact-container">
+
+    <div class="contact-grid">
+
+      <!-- CONTACT INFORMATION -->
+      <div class="contact-card">
+
+        <h2>Get in Touch</h2>
+
+        <p>
+          Have a question about your plan, payment, account, or claim?
+          Contact our support team.
+        </p>
+
+        <div class="contact-item">
+          <h3>Email</h3>
+          <p>
+            <a href="mailto:ccsolutions133@gmail.com">
+              ccsolutions133@gmail.com
+            </a>
+          </p>
+        </div>
+
+        <div class="contact-item">
+          <h3>Phone</h3>
+          <p>
+            <a href="tel:+50586475926">
+              +505 8647 5926
+            </a>
+          </p>
+        </div>
+
+        <div class="contact-item">
+          <h3>Customer Support</h3>
+          <p>
+            Our team can assist with general questions regarding
+            PrimeShield plans and customer accounts.
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- CONTACT FORM -->
+      <div class="contact-card">
+
+        <h2>Send Us a Message</h2>
+
+        <p>
+          Fill out the form below and our team will receive your message.
+        </p>
+
+        <form id="contactForm">
+
+          <label>
+            Full Name
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your name"
+              required
+            >
+          </label>
+
+          <label>
+            Email Address
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+            >
+          </label>
+
+          <label>
+            Phone Number
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Your phone number"
+            >
+          </label>
+
+          <label>
+            Message
+            <textarea
+              id="message"
+              name="message"
+              placeholder="How can we help?"
+              required
+            ></textarea>
+          </label>
+
+          <button type="submit">
+            Send Message
+          </button>
+
+          <div class="notice" id="successMessage">
+            Thank you! Your message has been submitted.
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="footer-container">
+
+      <div class="footer-brand">
+        <h3>PrimeShield</h3>
+
+        <p>
+          Vehicle protection plans designed to help provide coverage
+          and support when you need it.
+        </p>
+      </div>
+
+      <div class="footer-contact">
+
+        <h4>Contact</h4>
+
+        <p>
+          <a href="mailto:ccsolutions133@gmail.com">
+            ccsolutions133@gmail.com
+          </a>
+        </p>
+
+        <p>
+          <a href="tel:+50557738419">
+            +505 57738419
+          </a>
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 PrimeShield. All rights reserved.
+    </div>
+
+  </footer>
+
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      document.getElementById("successMessage").style.display = "block";
+
+      this.reset();
+    });
+  </script>
 
 </body>
 </html>
