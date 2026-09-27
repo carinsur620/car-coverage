@@ -3,226 +3,726 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PrimeShield – Vehicle Coverage</title>
+
+<title>PrimeShield | Vehicle Protection</title>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; font-family:Arial, sans-serif; }
-body { background: linear-gradient(135deg, #0a2540, #0074d9); color:#fff; }
-
-header { text-align:center; padding:100px 20px 60px 20px; }
-header h1 { font-size:3rem; }
-header p { margin-top:10px; }
-
-.hero-btn { margin-top:20px; display:inline-block; background:#ff6b6b; padding:15px 25px; border-radius:8px; text-decoration:none; color:white; }
-.hero-btn:hover { background:#ff4757; }
-
-nav { display:flex; justify-content:center; background:rgba(0,0,0,0.2); }
-nav a { padding:15px 20px; color:white; text-decoration:none; }
-nav a:hover { background:rgba(255,255,255,0.2); }
-
-.section { padding:60px 20px; text-align:center; }
-
-.slider { max-width:900px; margin:auto; overflow:hidden; border-radius:15px; }
-.slides { display:flex; transition:1s; }
-.slides img { width:100%; height:300px; object-fit:cover; }
-
-.plans { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
-
-.plan-card {
-background:white; color:#333; padding:20px;
-border-radius:15px; width:250px;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.plan-card:hover { transform:translateY(-10px); }
+html {
+    scroll-behavior: smooth;
+}
 
-.price { font-size:28px; color:#ff4757; font-weight:bold; }
+body {
+    background: #f5f7fa;
+    color: #172033;
+}
 
-.contact a { color:#00c6ff; }
+/* =========================
+   HEADER / NAVIGATION
+========================= */
 
-footer { text-align:center; padding:30px; background:rgba(0,0,0,0.5); }
+header {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-/* Modal */
-#paymentModal {
-display:none;
-position:fixed;
-top:0; left:0;
-width:100%; height:100%;
-background:rgba(0,0,0,0.7);
-justify-content:center;
-align-items:center;
-z-index:9999;
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+    padding: 14px 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* LOGO */
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    text-decoration: none;
+    color: #0b2545;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.logo {
+    width: 45px;
+    height: 50px;
+}
+
+/* NAV LINKS */
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #334155;
+    font-weight: 600;
+    padding: 10px 13px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    background: #eaf3fb;
+    color: #1261a0;
+}
+
+.login-btn {
+    background: #1261a0;
+    color: white !important;
+}
+
+.login-btn:hover {
+    background: #0b4f88 !important;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 600px;
+
+    background:
+        linear-gradient(
+            rgba(5, 25, 45, 0.65),
+            rgba(5, 25, 45, 0.65)
+        ),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+
+    padding: 80px 25px;
+
+    color: white;
+}
+
+.hero-badge {
+    display: inline-block;
+
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+
+    padding: 8px 15px;
+    border-radius: 50px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 7vw, 75px);
+    line-height: 1;
+
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    max-width: 650px;
+
+    color: #e5edf5;
+
+    line-height: 1.7;
+}
+
+/* BUTTONS */
+
+.btn {
+    display: inline-block;
+
+    padding: 14px 23px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    margin-top: 28px;
+
+    transition: 0.2s;
+}
+
+.primary-btn {
+    background: #1261a0;
+    color: white;
+}
+
+.primary-btn:hover {
+    background: #0b4f88;
+}
+
+.light-btn {
+    background: white;
+    color: #0b2545;
+
+    margin-left: 8px;
+}
+
+.light-btn:hover {
+    background: #e9eef4;
+}
+
+/* =========================
+   MAIN SECTION
+========================= */
+
+.section {
+    max-width: 1200px;
+    margin: auto;
+
+    padding: 80px 25px;
+}
+
+.section-title {
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 36px;
+    color: #0b2545;
+
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: #64748b;
+}
+
+/* =========================
+   SLIDER
+========================= */
+
+.slider {
+    max-width: 1000px;
+
+    margin: auto;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px rgba(15,35,60,0.12);
+}
+
+.slides {
+    display: flex;
+
+    transition: transform 1s ease;
+}
+
+.slides img {
+    min-width: 100%;
+
+    height: 350px;
+
+    object-fit: cover;
+}
+
+/* =========================
+   FEATURE CARDS
+========================= */
+
+.features {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+
+    margin-top: 45px;
+}
+
+.feature-card {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 10px 30px rgba(15,35,60,0.08);
+
+    text-align: center;
+}
+
+.feature-card h3 {
+    color: #0b2545;
+
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    color: #64748b;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #0b2545;
+
+    color: #dbe5ef;
+
+    margin-top: 40px;
+}
+
+.footer-container {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 40px 25px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    flex-wrap: wrap;
+}
+
+.footer-container h3 {
+    color: white;
+
+    margin-bottom: 10px;
+}
+
+.footer-container a {
+    color: #dbeafe;
+
+    text-decoration: none;
+}
+
+.footer-container a:hover {
+    text-decoration: underline;
+}
+
+.copyright {
+    width: 100%;
+
+    border-top: 1px solid rgba(255,255,255,0.15);
+
+    padding-top: 20px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 850px) {
+
+    .navbar {
+        flex-direction: column;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .hero {
+        min-height: 520px;
+    }
+
+    .hero-content {
+        padding-top: 70px;
+    }
+
+    .light-btn {
+        margin-left: 0;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .slides img {
+        height: 250px;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================
+     NAVIGATION
+========================= -->
+
 <header>
-<h1>PrimeShield</h1>
-<p>Your Trusted Vehicle Coverage Partner</p>
-<a href="#plans" class="hero-btn">Choose Your Plan</a>
-</header>
+
+<div class="navbar">
+
+<a href="index.html" class="logo-container">
+
+<!-- PrimeShield Logo -->
+<svg class="logo"
+     xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 100 115">
+
+    <path
+        d="M50 4L91 18V52C91 79 75 99 50 111C25 99 9 79 9 52V18L50 4Z"
+        fill="#1261a0"/>
+
+    <path
+        d="M50 12L82 23V52C82 73 71 90 50 101C29 90 18 73 18 52V23L50 12Z"
+        fill="white"/>
+
+    <path
+        d="M50 25C40 34 32 38 25 40V52C25 67 33 79 50 89C67 79 75 67 75 52V40C68 38 60 34 50 25Z"
+        fill="#0b2545"/>
+
+    <text
+        x="50"
+        y="66"
+        text-anchor="middle"
+        font-family="Arial"
+        font-size="24"
+        font-weight="800"
+        fill="white">
+        PS
+    </text>
+
+</svg>
+
+PrimeShield
+
+</a>
+
 
 <nav>
-<a href="#home">Home</a>
-<a href="#plans">Plans</a>
-<a href="#reviews">Reviews</a>
-<a href="#about">About</a>
-  <a href="#terms">Terms</a>
+
+<a href="index.html">Home</a>
+
+<a href="plans.html">Plans</a>
+
+<a href="testimonials.html">Reviews</a>
+
+<a href="about.html">About</a>
+
+<a href="terms.html">Terms</a>
+
+<a href="contact.html">Contact</a>
+
+<a href="login.html" class="login-btn">
+Customer Login
+</a>
+
 </nav>
 
-<div id="home" class="section">
+</div>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<span class="hero-badge">
+Trusted Vehicle Protection
+</span>
+
+<h1>
+PrimeShield
+</h1>
+
+<p>
+Protect your vehicle with coverage designed to help
+you handle unexpected repair costs with confidence.
+</p>
+
+<a href="plans.html"
+   class="btn primary-btn">
+
+View Coverage Plans
+
+</a>
+
+<a href="about.html"
+   class="btn light-btn">
+
+Learn More
+
+</a>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     VEHICLE SLIDER
+========================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<h2>
+Drive With Confidence
+</h2>
+
+<p>
+Explore PrimeShield vehicle protection and customer resources.
+</p>
+
+</div>
+
+
 <div class="slider">
+
 <div class="slides">
-<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
-<img src="https://images.unsplash.com/photo-1493238792000-8113da705763">
-<img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c">
-</div>
-</div>
+
+<img
+src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=85"
+alt="Vehicle">
+
+<img
+src="https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=1600&q=85"
+alt="Vehicle on road">
+
+<img
+src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1600&q=85"
+alt="Luxury vehicle">
+
 </div>
 
-<!-- PREMIUM PLANS -->
-<div id="plans" class="section">
-<h2>Our Coverage Plans</h2>
-<p style="color:#ff6b6b; font-weight:bold; margin-bottom:30px; position:relative; z-index:2;">
-Limited Time Offer – Prices may increase soon
+</div>
+
+</section>
+
+
+<!-- =========================
+     FEATURES
+========================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<h2>
+Why PrimeShield?
+</h2>
+
+<p>
+Simple access to your vehicle protection resources.
 </p>
-  
-<div class="plans">
 
-<div class="plan-card">
-<h3>Basic</h3>
-<p class="price">$79</p>
-<ul>
-<li>Engine Protection</li>
-<li>Transmission</li>
-<li>Nationwide</li>
-</ul>
-<div id="paypal-basic"></div>
 </div>
 
-<div class="plan-card" style="transform:scale(1.05); border:3px solid blue;">
-<div style="background:color:white;"> Most Popular</div>
-<h3>Standard</h3>
-<p class="price">$129</p>
-<ul>
-<li>Everything in Basic</li>
-<li>Roadside Assistance</li>
-<li>Priority Claims</li>
-</ul>
-<div id="paypal-standard"></div>
-</div>
 
-<div class="plan-card" style="border:3px;">
-<div style="background:color:white;">Best Value</div>
-<h3>Premium</h3>
-<p class="price">$179</p>
-<ul>
-<li>Full Coverage</li>
-<li>24/7 Support</li>
-<li>Fast Claims</li>
-</ul>
-<div id="paypal-premium"></div>
-</div>
-<p style="font-size:12px; color:#ddd;">
-*Coverage begins after 30 days. Terms apply.
+<div class="features">
+
+<div class="feature-card">
+
+<h3>
+Vehicle Protection
+</h3>
+
+<p>
+Choose from multiple coverage options designed
+for different levels of vehicle protection.
 </p>
-</div>
-</div>
 
-<div id="reviews" class="section">
-<p>⭐⭐⭐⭐⭐ Amazing service!</p>
-<p>⭐⭐⭐⭐⭐ Saved me thousands!</p>
 </div>
 
-<div id="about" class="section">
-<p>We provide reliable vehicle protection nationwide.</p>
-</div>
 
-<div id="contact" class="section contact">
-<p>Email: <a href="mailto:supportautoshield@gmail.com">supportautoshield@gmail.com</a></p>
-<p>Phone: 57169950</p>
-</div>
-<div id="terms" class="section">
-<h2>Coverage Terms & Conditions</h2>
+<div class="feature-card">
 
-<p>By purchasing a PrimeShield plan, you agree to the following terms and conditions:</p>
+<h3>
+Claims Support
+</h3>
 
-<ul style="max-width:800px; margin:20px auto; text-align:left; line-height:1.6;">
-<li>⏳ <strong>30-Day Waiting Period:</strong> Coverage begins 30 days after your initial payment.</li>
-
-<li>🔄 <strong>Active Subscription Required:</strong> Your plan must remain active and paid to maintain coverage.</li>
-
-<li>🚫 <strong>Pre-Existing Conditions:</strong> Any vehicle issues or damages that existed before enrollment are not covered.</li>
-
-<li>🛠️ <strong>Claims Approval:</strong> All claims are subject to review and approval based on plan terms.</li>
-
-<li>📅 <strong>Plan Duration:</strong> Plans are billed monthly and renew automatically unless canceled.</li>
-
-<li>⚠️ <strong>Misuse & Fraud:</strong> Any fraudulent claims or misuse of the service may result in account suspension without refund.</li>
-
-<li>📞 <strong>Contact & Support:</strong> For assistance, contact us at <strong>supportautoshield@gmail.com</strong> or call <strong>57169950</strong>.</li>
-</ul>
-
-<p style="max-width:700px; margin:0 auto;">
-Our goal is to provide reliable vehicle protection while ensuring fair use of our services for all customers.
+<p>
+Customers can access their account and submit
+claims through the customer dashboard.
 </p>
-</div>
-<footer>© 2026 PrimeShield</footer>
 
-<!-- PAYMENT MODAL -->
-<div id="paymentModal">
-<div style="background:white;color:#333;padding:30px;border-radius:15px;text-align:center;">
-<h2>Payment Successful</h2>
-<p>Your Registration Code:</p>
-<div id="regCodeDisplay" style="font-size:24px;color:red;"></div>
-<p>Do not share this code</p>
-<button onclick="goToRegister()">Continue</button>
-</div>
 </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=AXFqBK64y2OBooWtHh5OdUn6PQi6GVneyALC_YhR7cC3aiHsWvQo6tOE3rh_e5TA9qzdv7lPXqcUPKOb&currency=USD"></script>
+
+<div class="feature-card">
+
+<h3>
+Customer Support
+</h3>
+
+<p>
+Our team is available to help customers with
+questions about their plans and services.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<div class="footer-container">
+
+<div>
+
+<h3>
+PrimeShield
+</h3>
+
+<p>
+Vehicle protection and warranty services.
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Contact
+</h3>
+
+<p>
+
+Email:
+<br>
+
+<a href="mailto:ccsolutions133@gmail.com">
+ccsolutions133@gmail.com
+</a>
+
+<br><br>
+
+Phone:
+<br>
+
+<a href="tel:+50586475926">
++505 8647 5926
+</a>
+
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Customer
+</h3>
+
+<p>
+
+<a href="plans.html">
+Coverage Plans
+</a>
+
+<br>
+
+<a href="login.html">
+Customer Login
+</a>
+
+<br>
+
+<a href="terms.html">
+Terms & Conditions
+</a>
+
+</p>
+
+</div>
+
+
+<div class="copyright">
+
+© 2026 PrimeShield. All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- =========================
+     SLIDER SCRIPT
+========================= -->
 
 <script>
-const planPrices = { basic:79, standard:129, premium:179 };
-const planCodes = { basic:"PRIME123", standard:"PRIME456", premium:"PRIME789" };
-const planIds = { basic:"paypal-basic", standard:"paypal-standard", premium:"paypal-premium" };
 
-let selectedCode = "";
+let slideIndex = 0;
 
-for (let plan in planIds) {
-paypal.Buttons({
-createOrder: function(data, actions) {
-return actions.order.create({
-purchase_units: [{ amount: { value: planPrices[plan].toString() } }]
-});
-},
-onApprove: function(data, actions) {
-return actions.order.capture().then(function(details) {
+const slides = document.querySelector(".slides");
 
-selectedCode = planCodes[plan];
+setInterval(function() {
 
-document.getElementById("regCodeDisplay").innerText = selectedCode;
-document.getElementById("paymentModal").style.display = "flex";
+    slideIndex++;
 
-});
-}
-}).render('#' + planIds[plan]);
-}
+    if (slideIndex >= 3) {
+        slideIndex = 0;
+    }
 
-// redirect
-function goToRegister() {
-window.location.href = "register.html?code=" + selectedCode;
-}
+    slides.style.transform =
+        "translateX(-" + (slideIndex * 100) + "%)";
 
-// slider
-let i=0;
-setInterval(()=>{
-i=(i+1)%3;
-document.querySelector(".slides").style.transform="translateX(-"+i*100+"%)";
-},4000);
+}, 4000);
+
 </script>
+
 
 </body>
 </html>
