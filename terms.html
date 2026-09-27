@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions | PrimeShield</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #111827;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .logo svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #1769e0;
+    }
+
+    .login-btn {
+      background: #1769e0;
+      color: white !important;
+      padding: 10px 17px;
+      border-radius: 7px;
+    }
+
+    .login-btn:hover {
+      background: #0f56bd;
+    }
+
+    .page-hero {
+      background:
+        linear-gradient(rgba(8, 25, 50, 0.78), rgba(8, 25, 50, 0.78)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85")
+        center/cover no-repeat;
+
+      color: white;
+      padding: 90px 20px;
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      font-size: 46px;
+      margin-bottom: 12px;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .terms-container {
+      max-width: 950px;
+      margin: 55px auto;
+      padding: 0 20px;
+    }
+
+    .terms-card {
+      background: white;
+      border-radius: 14px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .terms-card h2 {
+      color: #111827;
+      font-size: 22px;
+      margin-bottom: 8px;
+      margin-top: 30px;
+    }
+
+    .terms-card h2:first-child {
+      margin-top: 0;
+    }
+
+    .terms-card p {
+      color: #4b5563;
+      margin-bottom: 18px;
+    }
+
+    .contact-box {
+      margin-top: 35px;
+      padding: 25px;
+      background: #f0f6ff;
+      border-left: 4px solid #1769e0;
+      border-radius: 8px;
+    }
+
+    .contact-box strong {
+      color: #111827;
+    }
+
+    .contact-box a {
+      color: #1769e0;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      margin-top: 70px;
+      padding: 40px 20px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand h3 {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      max-width: 400px;
+      font-size: 14px;
+    }
+
+    .footer-contact h4 {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-contact p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .footer-contact a {
+      color: #d1d5db;
+      text-decoration: none;
+    }
+
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #374151;
+      margin-top: 30px;
+      padding-top: 20px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 800px) {
+      .navbar {
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .page-hero h1 {
+        font-size: 36px;
+      }
+
+      .terms-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="navbar">
+
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
+            fill="#1769e0"
+          />
+          <path
+            d="M50 16 L78 27 V48 C78 65 67 77 50 84 C33 77 22 65 22 48 V27 Z"
+            fill="#ffffff"
+          />
+          <text
+            x="50"
+            y="58"
+            text-anchor="middle"
+            font-size="25"
+            font-weight="bold"
+            fill="#1769e0"
+          >PS</text>
+        </svg>
+
+        PrimeShield
+      </a>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="plans.html">Plans</a>
+        <a href="testimonials.html">Reviews</a>
+        <a href="about.html">About</a>
+        <a href="terms.html" class="active">Terms</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="login-btn">Customer Login</a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <h1>Coverage Terms & Conditions</h1>
+    <p>Please review the terms before purchasing a PrimeShield plan.</p>
+  </section>
+
+
+  <!-- TERMS -->
+  <main class="terms-container">
+
+    <div class="terms-card">
+
+      <h2>30-Day Waiting Period</h2>
+      <p>
+        Coverage begins 30 days after the initial payment.
+      </p>
+
+      <h2>Active Subscription Required</h2>
+      <p>
+        Your plan must remain active and paid in order to maintain coverage.
+      </p>
+
+      <h2>Pre-Existing Conditions</h2>
+      <p>
+        Existing vehicle issues or damages that occurred before coverage began
+        are not covered.
+      </p>
+
+      <h2>Claims Approval</h2>
+      <p>
+        All claims are subject to review and approval based on the terms and
+        conditions of the selected plan.
+      </p>
+
+      <h2>Plan Duration</h2>
+      <p>
+        Plans are billed monthly and automatically renew unless canceled.
+      </p>
+
+      <h2>Misuse & Fraud</h2>
+      <p>
+        Fraudulent claims or misuse of the service may result in account
+        suspension without a refund.
+      </p>
+
+      <h2>Contact & Support</h2>
+      <p>
+        If you have questions about your coverage, account, or claims,
+        please contact our support team.
+      </p>
+
+      <div class="contact-box">
+        <strong>PrimeShield Support</strong><br><br>
+
+        Email:
+        <a href="mailto:ccsolutions133@gmail.com">
+          ccsolutions133@gmail.com
+        </a>
+        <br>
+
+        Phone:
+        <a href="tel:+50586475926">
+          +505 8647 5926
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="footer-container">
+
+      <div class="footer-brand">
+        <h3>PrimeShield</h3>
+        <p>
+          Vehicle protection plans designed to help provide coverage
+          and support when you need it.
+        </p>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+
+        <p>
+          <a href="mailto:ccsolutions133@gmail.com">
+            ccsolutions133@gmail.com
+          </a>
+        </p>
+
+        <p>
+          <a href="tel:+50557738419">
+            +505 57738419
+          </a>
+        </p>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 PrimeShield. All rights reserved.
+    </div>
+
+  </footer>
+
+</body>
+</html>
