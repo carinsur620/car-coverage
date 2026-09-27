@@ -1,100 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - PrimeShield</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Login | PrimeShield</title>
 
-<style>
-body {
-  font-family: Arial;
-  background: linear-gradient(135deg, #0a2540, #0074d9);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  color:white;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.box {
-  background:white;
-  color:#333;
-  padding:30px;
-  border-radius:15px;
-  width:320px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
-}
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+      min-height: 100vh;
+    }
 
-h2 { text-align:center; margin-bottom:20px; }
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
-input {
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
 
-button {
-  width:100%;
-  padding:12px;
-  background:#0074d9;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #111827;
+      font-size: 21px;
+      font-weight: 800;
+    }
 
-button:hover { background:#005fa3; }
-</style>
+    .logo svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #1769e0;
+    }
+
+    .login-btn {
+      background: #1769e0;
+      color: #ffffff !important;
+      padding: 10px 17px;
+      border-radius: 7px;
+    }
+
+    .login-btn:hover {
+      background: #0f56bd;
+    }
+
+    .login-section {
+      min-height: calc(100vh - 75px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+      background:
+        linear-gradient(rgba(8, 25, 50, 0.70), rgba(8, 25, 50, 0.70)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85")
+        center/cover no-repeat;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.20);
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .login-logo svg {
+      width: 58px;
+      height: 58px;
+      margin-bottom: 10px;
+    }
+
+    .login-logo h1 {
+      font-size: 28px;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .login-logo p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #1769e0;
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.10);
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      background: #1769e0;
+      color: #ffffff;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      background: #0f56bd;
+    }
+
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 22px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .register-link a {
+      color: #1769e0;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #6b7280;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .back-home:hover {
+      color: #1769e0;
+    }
+
+    @media (max-width: 800px) {
+      .navbar {
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .login-card {
+        padding: 30px 22px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="box">
-<h2>Customer Login</h2>
+  <!-- HEADER -->
+  <header>
+    <div class="navbar">
 
-<form id="loginForm">
-<input type="email" id="email" placeholder="Email" required>
-<input type="password" id="password" placeholder="Password" required>
-<button type="submit">Login</button>
-</form>
+      <a href="index.html" class="logo">
 
-</div>
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
+            fill="#1769e0"
+          />
+          <path
+            d="M50 16 L78 27 V48 C78 65 67 77 50 84 C33 77 22 65 22 48 V27 Z"
+            fill="#ffffff"
+          />
+          <text
+            x="50"
+            y="58"
+            text-anchor="middle"
+            font-size="25"
+            font-weight="bold"
+            fill="#1769e0"
+          >PS</text>
+        </svg>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        PrimeShield
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAEnNIYafp1h4qRADKi_Kx3RvXMfzxwlP4",
-  authDomain: "autoprotection-99453.firebaseapp.com",
-  projectId: "autoprotection-99453",
-  appId: "1:290645208750:web:e5015505c4697cc617073f"
-};
+      </a>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="plans.html">Plans</a>
+        <a href="testimonials.html">Reviews</a>
+        <a href="about.html">About</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="active login-btn">Customer Login</a>
+      </nav>
 
-document.getElementById("loginForm").addEventListener("submit", async (e)=>{
-  e.preventDefault();
+    </div>
+  </header>
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
 
-  if (!email || !password) {
-    alert("Please fill in all fields.");
-    return;
-  }
+  <!-- LOGIN -->
+  <main class="login-section">
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = "dashboard.html";
-  } catch (error) {
-    alert("Invalid email or password.");
-  }
-});
-</script>
+    <div class="login-card">
+
+      <div class="login-logo">
+
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
+            fill="#1769e0"
+          />
+          <path
+            d="M50 16 L78 27 V48 C78 65 67 77 50 84 C33 77 22 65 22 48 V27 Z"
+            fill="#ffffff"
+          />
+          <text
+            x="50"
+            y="58"
+            text-anchor="middle"
+            font-size="25"
+            font-weight="bold"
+            fill="#1769e0"
+          >PS</text>
+        </svg>
+
+        <h1>Customer Login</h1>
+        <p>Access your PrimeShield account</p>
+
+      </div>
+
+
+      <form id="loginForm">
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="you@example.com"
+            required
+          >
+        </div>
+
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+          >
+        </div>
+
+
+        <button type="submit" id="loginButton">
+          Sign In
+        </button>
+
+        <div class="error-message" id="errorMessage"></div>
+
+      </form>
+
+
+      <div class="register-link">
+        Don't have an account?
+        <a href="register.html">Create an account</a>
+      </div>
+
+      <a href="index.html" class="back-home">
+        ← Back to PrimeShield
+      </a>
+
+    </div>
+
+  </main>
+
+
+  <!-- FIREBASE -->
+  <script type="module">
+
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAEnNIYafp1h4qRADKi_Kx3RvXMfzxwlP4",
+      authDomain: "autoprotection-99453.firebaseapp.com",
+      projectId: "autoprotection-99453",
+      storageBucket: "autoprotection-99453.firebasestorage.app",
+      messagingSenderId: "290645208750",
+      appId: "1:290645208750:web:e5015505c4697cc617073f"
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const errorMessage = document.getElementById("errorMessage");
+
+
+    loginForm.addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      errorMessage.style.display = "none";
+      loginButton.disabled = true;
+      loginButton.textContent = "Signing In...";
+
+
+      try {
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        window.location.href = "dashboard.html";
+
+      } catch (error) {
+
+        console.error(error);
+
+        let message = "Unable to sign in. Please check your email and password.";
+
+        if (
+          error.code === "auth/invalid-credential" ||
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/user-not-found"
+        ) {
+          message = "Invalid email or password.";
+        }
+
+        if (error.code === "auth/too-many-requests") {
+          message = "Too many unsuccessful attempts. Please try again later.";
+        }
+
+        errorMessage.textContent = message;
+        errorMessage.style.display = "block";
+
+        loginButton.disabled = false;
+        loginButton.textContent = "Sign In";
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
