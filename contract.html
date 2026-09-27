@@ -1,42 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Warranty Contract</title>
-<style>
-body {font-family:Arial; margin:40px; background:#f2f6ff;}
-header {background:#0b4ea2; color:white; text-align:center; padding:25px;}
-nav {background:#083a7a; text-align:center; padding:12px;}
-nav a {color:white; margin:15px; text-decoration:none; font-weight:bold;}
-nav a:hover {color:#9cc9ff;}
-h1 {color:#0b4ea2;}
-footer {background:#083a7a; color:white; text-align:center; padding:20px; margin-top:40px;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coverage Agreement | PrimeShield</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #111827;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .logo svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #1769e0;
+    }
+
+    .login-btn {
+      background: #1769e0;
+      color: white !important;
+      padding: 10px 17px;
+      border-radius: 7px;
+    }
+
+    .login-btn:hover {
+      background: #0f56bd;
+    }
+
+    .page-hero {
+      background:
+        linear-gradient(rgba(8, 25, 50, 0.78), rgba(8, 25, 50, 0.78)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85")
+        center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 90px 20px;
+    }
+
+    .page-hero h1 {
+      font-size: 46px;
+      margin-bottom: 12px;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .contract-container {
+      max-width: 950px;
+      margin: 55px auto;
+      padding: 0 20px;
+    }
+
+    .contract-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 45px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .contract-card h2 {
+      color: #111827;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .contract-card h3 {
+      color: #1769e0;
+      font-size: 18px;
+      margin-top: 30px;
+      margin-bottom: 8px;
+    }
+
+    .contract-card p {
+      color: #4b5563;
+      margin-bottom: 18px;
+    }
+
+    .coverage-list {
+      margin: 10px 0 20px 25px;
+      color: #4b5563;
+    }
+
+    .coverage-list li {
+      margin-bottom: 8px;
+    }
+
+    .agreement-box {
+      margin-top: 35px;
+      padding: 25px;
+      background: #f0f6ff;
+      border-left: 4px solid #1769e0;
+      border-radius: 8px;
+    }
+
+    .agreement-box strong {
+      color: #111827;
+    }
+
+    .contact-box {
+      margin-top: 25px;
+      padding: 20px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+    }
+
+    .contact-box a {
+      color: #1769e0;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      margin-top: 70px;
+      padding: 40px 20px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand h3 {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      max-width: 400px;
+      font-size: 14px;
+    }
+
+    .footer-contact h4 {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-contact p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .footer-contact a {
+      color: #d1d5db;
+      text-decoration: none;
+    }
+
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #374151;
+      margin-top: 30px;
+      padding-top: 20px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 800px) {
+      .navbar {
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .page-hero h1 {
+        font-size: 36px;
+      }
+
+      .contract-card {
+        padding: 25px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-<h1>Factory Warranty Contract</h1>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="navbar">
 
-<nav>
-<a href="index.html">Home</a>
-<a href="plans.html">Coverage Plans</a>
-<a href="login.html">Customer Login</a>
-<a href="testimonials.html">Reviews</a>
-<a href="contract.html">Contract</a>
-<a href="contact.html">Contact</a>
-</nav>
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
+            fill="#1769e0"
+          />
+          <path
+            d="M50 16 L78 27 V48 C78 65 67 77 50 84 C33 77 22 65 22 48 V27 Z"
+            fill="#ffffff"
+          />
+          <text
+            x="50"
+            y="58"
+            text-anchor="middle"
+            font-size="25"
+            font-weight="bold"
+            fill="#1769e0"
+          >PS</text>
+        </svg>
 
-<h2>Terms & Conditions</h2>
-<p>This warranty covers vehicle component failures caused by manufacturing defects, including engine, transmission, and factory-installed electrical components.</p>
-<p>It does not cover damage caused by accidents, misuse, neglect, or normal wear and tear.</p>
-<p>By purchasing a warranty plan, the customer agrees to the terms and conditions stated within this contract.</p>
+        PrimeShield
+      </a>
 
-<footer>
-<p>© 2026 PrimeShield Factory Warranty</p>
-</footer>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="plans.html">Plans</a>
+        <a href="testimonials.html">Reviews</a>
+        <a href="about.html">About</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+        <a href="contract.html" class="active">Agreement</a>
+        <a href="login.html" class="login-btn">Customer Login</a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <h1>Coverage Agreement</h1>
+    <p>Important information about your PrimeShield vehicle protection.</p>
+  </section>
+
+
+  <!-- CONTRACT -->
+  <main class="contract-container">
+
+    <div class="contract-card">
+
+      <h2>PrimeShield Vehicle Protection Agreement</h2>
+
+      <p>
+        This agreement describes the general coverage terms associated with
+        a PrimeShield vehicle protection plan. Customers should review the
+        applicable plan terms before purchasing coverage.
+      </p>
+
+
+      <h3>Covered Components</h3>
+
+      <p>
+        Subject to the selected plan and applicable terms, coverage may
+        include failures of covered vehicle components caused by qualifying
+        mechanical or electrical defects.
+      </p>
+
+      <ul class="coverage-list">
+        <li>Engine components</li>
+        <li>Transmission components</li>
+        <li>Factory-installed electrical components</li>
+      </ul>
+
+
+      <h3>Exclusions</h3>
+
+      <p>
+        Coverage does not apply to conditions or damage resulting from
+        accidents, misuse, neglect, or normal wear and tear, subject to
+        the applicable terms of the selected plan.
+      </p>
+
+
+      <h3>Claims</h3>
+
+      <p>
+        All claims are subject to review and approval. Customers may be
+        required to provide information about the vehicle, the issue being
+        reported, and any applicable repair documentation.
+      </p>
+
+
+      <h3>Customer Responsibilities</h3>
+
+      <p>
+        Customers are responsible for maintaining their vehicle according
+        to the manufacturer's recommended maintenance requirements and for
+        providing accurate information when purchasing coverage or submitting
+        a claim.
+      </p>
+
+
+      <div class="agreement-box">
+        <strong>Customer Agreement</strong>
+
+        <p style="margin-top: 10px; margin-bottom: 0;">
+          By purchasing a PrimeShield plan, the customer acknowledges that
+          they have reviewed and agreed to the applicable coverage terms,
+          conditions, limitations, and exclusions.
+        </p>
+      </div>
+
+
+      <div class="contact-box">
+        <strong>Questions about your agreement?</strong>
+
+        <p style="margin-top: 8px; margin-bottom: 0;">
+          Email:
+          <a href="mailto:ccsolutions133@gmail.com">
+            ccsolutions133@gmail.com
+          </a>
+          <br>
+
+          Phone:
+          <a href="tel:+50586475926">
+            +505 8647 5926
+          </a>
+        </p>
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="footer-container">
+
+      <div class="footer-brand">
+        <h3>PrimeShield</h3>
+
+        <p>
+          Vehicle protection plans designed to help provide coverage
+          and support when you need it.
+        </p>
+      </div>
+
+      <div class="footer-contact">
+
+        <h4>Contact</h4>
+
+        <p>
+          <a href="mailto:ccsolutions133@gmail.com">
+            ccsolutions133@gmail.com
+          </a>
+        </p>
+
+        <p>
+          <a href="tel:+50586475926">
+            +505 8647 5926
+          </a>
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 PrimeShield. All rights reserved.
+    </div>
+
+  </footer>
 
 </body>
 </html>
