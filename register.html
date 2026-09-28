@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Account | PrimeShield</title>
+  <title>Terms & Conditions | PrimeShield</title>
 
   <style>
     * {
@@ -16,12 +16,15 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #f5f7fa;
       color: #1f2937;
-      min-height: 100vh;
+      line-height: 1.7;
     }
 
     header {
       background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     .navbar {
@@ -61,6 +64,7 @@
       color: #374151;
       font-size: 14px;
       font-weight: 600;
+      transition: 0.2s;
     }
 
     nav a:hover,
@@ -70,7 +74,7 @@
 
     .login-btn {
       background: #1769e0;
-      color: #ffffff !important;
+      color: white !important;
       padding: 10px 17px;
       border-radius: 7px;
     }
@@ -79,168 +83,132 @@
       background: #0f56bd;
     }
 
-    .register-section {
-      min-height: calc(100vh - 75px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 50px 20px;
+    .page-hero {
       background:
-        linear-gradient(rgba(8, 25, 50, 0.70), rgba(8, 25, 50, 0.70)),
+        linear-gradient(rgba(8, 25, 50, 0.78), rgba(8, 25, 50, 0.78)),
         url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85")
         center/cover no-repeat;
-    }
 
-    .register-card {
-      width: 100%;
-      max-width: 470px;
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.20);
-    }
-
-    .register-logo {
+      color: white;
+      padding: 90px 20px;
       text-align: center;
-      margin-bottom: 25px;
     }
 
-    .register-logo svg {
-      width: 58px;
-      height: 58px;
-      margin-bottom: 10px;
+    .page-hero h1 {
+      font-size: 46px;
+      margin-bottom: 12px;
     }
 
-    .register-logo h1 {
-      font-size: 28px;
+    .page-hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .terms-container {
+      max-width: 950px;
+      margin: 55px auto;
+      padding: 0 20px;
+    }
+
+    .terms-card {
+      background: white;
+      border-radius: 14px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .terms-card h2 {
       color: #111827;
-      margin-bottom: 6px;
+      font-size: 22px;
+      margin-bottom: 8px;
+      margin-top: 30px;
     }
 
-    .register-logo p {
-      color: #6b7280;
-      font-size: 14px;
+    .terms-card h2:first-child {
+      margin-top: 0;
     }
 
-    .form-group {
-      margin-bottom: 17px;
+    .terms-card p {
+      color: #4b5563;
+      margin-bottom: 18px;
     }
 
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 700;
-      color: #374151;
-      margin-bottom: 7px;
+    .terms-card ul {
+      margin: 10px 0 20px 25px;
+      color: #4b5563;
     }
 
-    input {
-      width: 100%;
-      padding: 13px 14px;
-      border: 1px solid #d1d5db;
+    .terms-card li {
+      margin-bottom: 8px;
+    }
+
+    .contact-box {
+      margin-top: 35px;
+      padding: 25px;
+      background: #f0f6ff;
+      border-left: 4px solid #1769e0;
       border-radius: 8px;
-      font-size: 15px;
-      outline: none;
     }
 
-    input:focus {
-      border-color: #1769e0;
-      box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.10);
+    .contact-box strong {
+      color: #111827;
     }
 
-    input[readonly] {
-      background: #f3f4f6;
-      color: #374151;
-      cursor: not-allowed;
-    }
-
-    .terms-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      margin: 20px 0;
-    }
-
-    .terms-row input {
-      width: auto;
-      margin-top: 4px;
-    }
-
-    .terms-row label {
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .terms-row a {
+    .contact-box a {
       color: #1769e0;
       text-decoration: none;
       font-weight: 600;
     }
 
-    button {
-      width: 100%;
-      border: none;
-      background: #1769e0;
-      color: #ffffff;
-      padding: 14px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s;
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      margin-top: 70px;
+      padding: 40px 20px;
     }
 
-    button:hover {
-      background: #0f56bd;
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
     }
 
-    button:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
+    .footer-brand h3 {
+      color: white;
+      margin-bottom: 10px;
     }
 
-    .error-message {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #b91c1c;
-      border-radius: 8px;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    .login-link {
-      text-align: center;
-      margin-top: 22px;
-      color: #6b7280;
+    .footer-brand p {
+      max-width: 400px;
       font-size: 14px;
     }
 
-    .login-link a {
-      color: #1769e0;
+    .footer-contact h4 {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-contact p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .footer-contact a {
+      color: #d1d5db;
       text-decoration: none;
-      font-weight: 700;
     }
 
-    .login-link a:hover {
-      text-decoration: underline;
-    }
-
-    .back-home {
-      display: block;
+    .copyright {
       text-align: center;
-      margin-top: 15px;
-      color: #6b7280;
-      text-decoration: none;
+      border-top: 1px solid #374151;
+      margin-top: 30px;
+      padding-top: 20px;
       font-size: 13px;
-    }
-
-    .back-home:hover {
-      color: #1769e0;
+      color: #9ca3af;
     }
 
     @media (max-width: 800px) {
@@ -252,8 +220,12 @@
         justify-content: center;
       }
 
-      .register-card {
-        padding: 30px 22px;
+      .page-hero h1 {
+        font-size: 36px;
+      }
+
+      .terms-card {
+        padding: 25px;
       }
     }
   </style>
@@ -268,14 +240,17 @@
       <a href="index.html" class="logo">
 
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
           <path
             d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
             fill="#1769e0"
           />
+
           <path
             d="M50 16 L78 27 V48 C78 65 67 77 50 84 C33 77 22 65 22 48 V27 Z"
             fill="#ffffff"
           />
+
           <text
             x="50"
             y="58"
@@ -284,10 +259,10 @@
             font-weight="bold"
             fill="#1769e0"
           >PS</text>
+
         </svg>
 
         PrimeShield
-
       </a>
 
       <nav>
@@ -295,7 +270,7 @@
         <a href="plans.html">Plans</a>
         <a href="testimonials.html">Reviews</a>
         <a href="about.html">About</a>
-        <a href="terms.html">Terms</a>
+        <a href="term.html" class="active">Terms</a>
         <a href="contact.html">Contact</a>
         <a href="login.html" class="login-btn">Customer Login</a>
       </nav>
@@ -304,385 +279,350 @@
   </header>
 
 
-  <!-- REGISTER -->
-  <main class="register-section">
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <h1>Coverage Terms &amp; Conditions</h1>
+    <p>Please review the terms before purchasing a PrimeShield plan.</p>
+  </section>
 
-    <div class="register-card">
 
-      <div class="register-logo">
+  <!-- TERMS -->
+  <main class="terms-container">
 
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M50 5 L90 20 V48 C90 72 74 89 50 97 C26 89 10 72 10 48 V20 Z"
-            fill="#1769e0"
-          />
-          <path
-            d="M50 16 L78 27 V48 C78 65 67 77 50 84 C33 77 22 65 22 48 V27 Z"
-            fill="#ffffff"
-          />
-          <text
-            x="50"
-            y="58"
-            text-anchor="middle"
-            font-size="25"
-            font-weight="bold"
-            fill="#1769e0"
-          >PS</text>
-        </svg>
+    <div class="terms-card">
 
-        <h1>Create Your Account</h1>
-        <p>Set up your PrimeShield customer account</p>
+      <h2>1. Vehicle Protection Plan</h2>
+      <p>
+        PrimeShield provides vehicle protection plans designed to help customers
+        with unexpected repair expenses for covered vehicle components, subject
+        to the applicable plan terms, exclusions, limitations, and claim
+        approval requirements.
+      </p>
+
+      <p>
+        A PrimeShield plan is a vehicle protection/service contract and is not
+        traditional automobile insurance.
+      </p>
+
+
+      <h2>2. 30-Day Waiting Period</h2>
+      <p>
+        A 30-day waiting period applies after enrollment before eligible claims
+        may be submitted for covered repairs.
+      </p>
+
+      <p>
+        Repairs or mechanical problems that occur before the waiting period has
+        been completed are not eligible for coverage.
+      </p>
+
+
+      <h2>3. Active Subscription Required</h2>
+      <p>
+        Customers must maintain an active PrimeShield subscription and remain
+        current with required payments in order to remain eligible for covered
+        benefits.
+      </p>
+
+      <p>
+        A plan may be suspended or terminated if required payments are not
+        maintained.
+      </p>
+
+
+      <h2>4. Pre-Existing Conditions</h2>
+      <p>
+        Pre-existing mechanical or electrical conditions are not covered.
+      </p>
+
+      <p>
+        A condition may be considered pre-existing when the failure or related
+        symptoms existed before coverage became effective or before the
+        applicable waiting period was completed.
+      </p>
+
+
+      <h2>5. Covered Repairs</h2>
+      <p>
+        Coverage applies only to eligible failures of components specifically
+        covered under the customer's selected PrimeShield plan.
+      </p>
+
+      <ul>
+        <li>Engine components may be covered according to the selected plan.</li>
+        <li>Transmission components may be covered according to the selected plan.</li>
+        <li>Factory-installed electrical components may be covered according to the selected plan.</li>
+      </ul>
+
+      <p>
+        Coverage is subject to the applicable contract terms, exclusions,
+        claim review, and authorization requirements.
+      </p>
+
+
+      <h2>6. Exclusions</h2>
+      <p>
+        PrimeShield does not provide coverage for every type of vehicle damage
+        or repair. Unless specifically stated otherwise in the applicable plan,
+        exclusions include:
+      </p>
+
+      <ul>
+        <li>Accidents or collision damage.</li>
+        <li>Misuse or abuse of the vehicle.</li>
+        <li>Neglect or failure to properly maintain the vehicle.</li>
+        <li>Normal wear and tear.</li>
+        <li>Pre-existing conditions.</li>
+        <li>Repairs or failures that do not meet the requirements of the applicable plan.</li>
+      </ul>
+
+
+      <h2>7. Claims Approval</h2>
+      <p>
+        All claims are subject to review and approval before covered repairs
+        are authorized.
+      </p>
+
+      <p>
+        Submitting a claim does not automatically guarantee approval or payment.
+        PrimeShield may request documentation, diagnostic information,
+        maintenance records, or other information necessary to evaluate the
+        claim.
+      </p>
+
+
+      <h2>8. Claim Authorization</h2>
+      <p>
+        Customers should not assume that a repair is covered or begin a
+        covered repair without receiving the required authorization.
+      </p>
+
+      <p>
+        Unauthorized repairs may not qualify for reimbursement or payment under
+        the applicable plan.
+      </p>
+
+
+      <h2>9. Customer Responsibilities</h2>
+      <p>
+        Customers are responsible for providing accurate information and
+        properly maintaining their vehicle.
+      </p>
+
+      <ul>
+        <li>Provide accurate vehicle and customer information.</li>
+        <li>Follow the vehicle manufacturer's recommended maintenance requirements.</li>
+        <li>Provide requested documentation when submitting a claim.</li>
+        <li>Notify PrimeShield of covered mechanical problems through the applicable claims process.</li>
+        <li>Follow claim authorization instructions before beginning repairs.</li>
+      </ul>
+
+
+      <h2>10. Repair Facilities</h2>
+      <p>
+        Covered repairs must be performed at a repair facility that meets the
+        requirements of the applicable PrimeShield plan and claim authorization
+        process.
+      </p>
+
+      <p>
+        Customers may be required to obtain authorization before repair work
+        begins.
+      </p>
+
+
+      <h2>11. Plan Duration &amp; Automatic Renewal</h2>
+      <p>
+        PrimeShield plans operate according to the subscription period selected
+        by the customer.
+      </p>
+
+      <p>
+        Monthly plans may automatically renew according to the customer's
+        selected billing arrangement unless canceled in accordance with the
+        applicable cancellation terms.
+      </p>
+
+
+      <h2>12. Cancellation &amp; Refunds</h2>
+      <p>
+        Customers may request cancellation of their subscription according to
+        the applicable cancellation procedure.
+      </p>
+
+      <p>
+        Any refund or cancellation adjustment will be handled according to the
+        terms applicable to the customer's plan and payment arrangement.
+      </p>
+
+
+      <h2>13. Misuse &amp; Fraud</h2>
+      <p>
+        PrimeShield reserves the right to suspend or terminate a plan when
+        there is evidence of fraud, intentional misuse, false information, or
+        other activity intended to improperly obtain benefits.
+      </p>
+
+
+      <h2>14. Accuracy of Customer Information</h2>
+      <p>
+        Customers are responsible for ensuring that all information submitted
+        during registration, payment, and claims processing is accurate and
+        complete.
+      </p>
+
+      <p>
+        Incorrect or misleading information may affect eligibility or claim
+        approval.
+      </p>
+
+
+      <h2>15. No Guarantee of Claim Approval</h2>
+      <p>
+        Enrollment in a PrimeShield plan does not guarantee that every repair
+        or mechanical problem will be covered.
+      </p>
+
+      <p>
+        Coverage depends on the customer's selected plan, the applicable
+        contract terms, exclusions, eligibility requirements, and claim
+        authorization.
+      </p>
+
+
+      <h2>16. Plan Pricing</h2>
+      <p>
+        PrimeShield currently offers the following plan options:
+      </p>
+
+      <ul>
+        <li><strong>Basic:</strong> $299</li>
+        <li><strong>Standard:</strong> $499</li>
+        <li><strong>Premium:</strong> $799</li>
+      </ul>
+
+      <p>
+        Pricing and available plans may be subject to change. The price
+        presented to the customer at the time of purchase will apply to that
+        transaction.
+      </p>
+
+
+      <h2>17. Changes to Plans or Terms</h2>
+      <p>
+        PrimeShield may update its plans, services, website information, or
+        terms when necessary.
+      </p>
+
+      <p>
+        Changes applicable to an existing customer's plan will be handled
+        according to the applicable contract and legal requirements.
+      </p>
+
+
+      <h2>18. Applicable Contract</h2>
+      <p>
+        The customer's applicable vehicle protection contract and plan documents
+        govern coverage, eligibility, exclusions, claims, cancellation, and
+        other contractual obligations.
+      </p>
+
+      <p>
+        These website terms are intended to provide general information and
+        should be reviewed together with the applicable customer contract.
+      </p>
+
+
+      <h2>19. Important Coverage Notice</h2>
+      <p>
+        PrimeShield vehicle protection plans are subject to eligibility
+        requirements, waiting periods, exclusions, limitations, claim review,
+        and authorization.
+      </p>
+
+      <p>
+        Customers should carefully review the applicable plan documents before
+        purchasing coverage.
+      </p>
+
+      <p>
+        Coverage availability and contractual requirements may vary depending
+        on the customer's location and applicable law.
+      </p>
+
+
+      <h2>20. Contact &amp; Support</h2>
+      <p>
+        If you have questions regarding your PrimeShield plan, billing, claims,
+        or coverage, please contact our support team.
+      </p>
+
+
+      <div class="contact-box">
+
+        <strong>PrimeShield Support</strong>
+        <br><br>
+
+        Email:
+        <a href="mailto:ccsolutions133@gmail.com">
+          ccsolutions133@gmail.com
+        </a>
+
+        <br>
+
+        Phone:
+        <a href="tel:+50557738419">
+          +505 5773 8419
+        </a>
 
       </div>
-
-
-      <form id="registerForm">
-
-        <div class="form-group">
-          <label for="email">Email Address</label>
-
-          <input
-            type="email"
-            id="email"
-            placeholder="you@example.com"
-            required
-          >
-        </div>
-
-
-        <div class="form-group">
-          <label for="password">Password</label>
-
-          <input
-            type="password"
-            id="password"
-            placeholder="Create a password"
-            minlength="6"
-            required
-          >
-        </div>
-
-
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-
-          <input
-            type="password"
-            id="confirmPassword"
-            placeholder="Confirm your password"
-            minlength="6"
-            required
-          >
-        </div>
-
-
-        <div class="form-group">
-          <label for="registrationCode">Registration Code</label>
-
-          <input
-            type="text"
-            id="registrationCode"
-            placeholder="Enter your registration code"
-            required
-          >
-        </div>
-
-
-        <div class="terms-row">
-
-          <input
-            type="checkbox"
-            id="terms"
-            required
-          >
-
-          <label for="terms">
-            I agree to the
-            <a href="terms.html" target="_blank">
-              Terms & Conditions
-            </a>
-            and understand the applicable coverage requirements.
-          </label>
-
-        </div>
-
-
-        <button type="submit" id="registerButton">
-          Create Account
-        </button>
-
-        <div class="error-message" id="errorMessage"></div>
-
-      </form>
-
-
-      <div class="login-link">
-        Already have an account?
-        <a href="login.html">Sign in</a>
-      </div>
-
-      <a href="index.html" class="back-home">
-        ← Back to PrimeShield
-      </a>
 
     </div>
 
   </main>
 
 
-  <!-- FIREBASE -->
-  <script type="module">
+  <!-- FOOTER -->
+  <footer>
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    <div class="footer-container">
 
-    import {
-      getAuth,
-      createUserWithEmailAndPassword
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+      <div class="footer-brand">
+        <h3>PrimeShield</h3>
 
-    import {
-      getFirestore,
-      doc,
-      setDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        <p>
+          Vehicle protection plans designed to help provide coverage
+          and support when you need it.
+        </p>
+      </div>
 
 
-    // NEW FIREBASE PROJECT
-    const firebaseConfig = {
-      apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
-      authDomain: "carinsurance-784eb.firebaseapp.com",
-      projectId: "carinsurance-784eb",
-      storageBucket: "carinsurance-784eb.firebasestorage.app",
-      messagingSenderId: "181837106063",
-      appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
-      measurementId: "G-0X0VX4Q76R"
-    };
+      <div class="footer-contact">
 
+        <h4>Contact</h4>
 
-    const app = initializeApp(firebaseConfig);
+        <p>
+          <a href="mailto:ccsolutions133@gmail.com">
+            ccsolutions133@gmail.com
+          </a>
+        </p>
 
-    const auth = getAuth(app);
+        <p>
+          <a href="tel:+50557738419">
+            +505 5773 8419
+          </a>
+        </p>
 
-    const db = getFirestore(app);
+      </div>
 
+    </div>
 
-    /*
-      Registration codes connected to plans.
-    */
 
-    const plans = {
-      PRIME123: {
-        name: "Basic Plan",
-        price: "$299"
-      },
+    <div class="copyright">
+      © 2026 PrimeShield. All rights reserved.
+    </div>
 
-      PRIME456: {
-        name: "Standard Plan",
-        price: "$499"
-      },
-
-      PRIME789: {
-        name: "Premium Plan",
-        price: "$799"
-      }
-    };
-
-
-    /*
-      Automatically read the code from:
-      register.html?code=PRIME123
-    */
-
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const codeFromURL = urlParams.get("code");
-
-
-    if (codeFromURL) {
-
-      const cleanCode = codeFromURL.trim().toUpperCase();
-
-      document.getElementById("registrationCode").value = cleanCode;
-
-      document.getElementById("registrationCode").readOnly = true;
-    }
-
-
-    const registerForm =
-      document.getElementById("registerForm");
-
-    const registerButton =
-      document.getElementById("registerButton");
-
-    const errorMessage =
-      document.getElementById("errorMessage");
-
-
-    registerForm.addEventListener("submit", async (event) => {
-
-      event.preventDefault();
-
-
-      const email =
-        document.getElementById("email").value.trim();
-
-      const password =
-        document.getElementById("password").value;
-
-      const confirmPassword =
-        document.getElementById("confirmPassword").value;
-
-      const registrationCode =
-        document.getElementById("registrationCode").value
-          .trim()
-          .toUpperCase();
-
-
-      errorMessage.style.display = "none";
-
-
-      // Check passwords
-      if (password !== confirmPassword) {
-
-        errorMessage.textContent =
-          "Passwords do not match.";
-
-        errorMessage.style.display = "block";
-
-        return;
-      }
-
-
-      // Check registration code
-      if (!plans[registrationCode]) {
-
-        errorMessage.textContent =
-          "Invalid registration code.";
-
-        errorMessage.style.display = "block";
-
-        return;
-      }
-
-
-      registerButton.disabled = true;
-
-      registerButton.textContent =
-        "Creating Account...";
-
-
-      try {
-
-        /*
-          STEP 1:
-          Create Firebase Authentication account.
-        */
-
-        const userCredential =
-          await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-
-
-        const user =
-          userCredential.user;
-
-
-        /*
-          STEP 2:
-          Create the customer's Firestore profile.
-        */
-
-        await setDoc(
-          doc(db, "users", user.uid),
-          {
-            email: user.email,
-
-            planCode: registrationCode,
-
-            planName: plans[registrationCode].name,
-
-            planPrice: plans[registrationCode].price,
-
-            status: "waiting",
-
-            blocked: false,
-
-            createdAt: serverTimestamp(),
-
-            updatedAt: serverTimestamp()
-          }
-        );
-
-
-        /*
-          STEP 3:
-          Send customer to dashboard.
-        */
-
-        window.location.href =
-          "dashboard.html";
-
-
-      } catch (error) {
-
-        console.error(error);
-
-
-        let message =
-          "Unable to create your account. Please try again.";
-
-
-        if (error.code === "auth/email-already-in-use") {
-
-          message =
-            "An account with this email already exists.";
-        }
-
-
-        if (error.code === "auth/invalid-email") {
-
-          message =
-            "Please enter a valid email address.";
-        }
-
-
-        if (error.code === "auth/weak-password") {
-
-          message =
-            "Password must be at least 6 characters.";
-        }
-
-
-        if (
-          error.code === "permission-denied" ||
-          error.code === "firestore/permission-denied"
-        ) {
-
-          message =
-            "Your account was created, but your customer profile could not be saved. Please contact support.";
-        }
-
-
-        errorMessage.textContent = message;
-
-        errorMessage.style.display = "block";
-
-
-        registerButton.disabled = false;
-
-        registerButton.textContent =
-          "Create Account";
-      }
-
-    });
-
-  </script>
+  </footer>
 
 </body>
 </html>
