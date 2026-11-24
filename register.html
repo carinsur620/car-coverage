@@ -431,258 +431,229 @@
 
 
   <!-- FIREBASE -->
-  <script type="module">
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<script type="module">
 
-    import {
-      getAuth,
-      createUserWithEmailAndPassword
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    import {
-      getFirestore,
-      doc,
-      setDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-    // NEW FIREBASE PROJECT
-    const firebaseConfig = {
-      apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
-      authDomain: "carinsurance-784eb.firebaseapp.com",
-      projectId: "carinsurance-784eb",
-      storageBucket: "carinsurance-784eb.firebasestorage.app",
-      messagingSenderId: "181837106063",
-      appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
-      measurementId: "G-0X0VX4Q76R"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
+    authDomain: "carinsurance-784eb.firebaseapp.com",
+    projectId: "carinsurance-784eb",
+    storageBucket: "carinsurance-784eb.firebasestorage.app",
+    messagingSenderId: "181837106063",
+    appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
+    measurementId: "G-0X0VX4Q76R"
+  };
 
 
-    const app = initializeApp(firebaseConfig);
-
-    const auth = getAuth(app);
-
-    const db = getFirestore(app);
+  const BACKEND_URL =
+    "https://primeshield-backend-mupe.onrender.com";
 
 
-    /*
-      Registration codes connected to plans.
-    */
-
-    const plans = {
-      PRIME123: {
-        name: "Basic Plan",
-        price: "$299"
-      },
-
-      PRIME456: {
-        name: "Standard Plan",
-        price: "$499"
-      },
-
-      PRIME789: {
-        name: "Premium Plan",
-        price: "$799"
-      }
-    };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
 
-    /*
-      Automatically read the code from:
-      register.html?code=PRIME123
-    */
+  const registrationInput =
+    document.getElementById("registrationCode");
 
-    const urlParams = new URLSearchParams(window.location.search);
+  const registerForm =
+    document.getElementById("registerForm");
 
-    const codeFromURL = urlParams.get("code");
+  const registerButton =
+    document.getElementById("registerButton");
+
+  const errorMessage =
+    document.getElementById("errorMessage");
 
 
-    if (codeFromURL) {
+  // Read registration code from URL if provided.
 
-      const cleanCode = codeFromURL.trim().toUpperCase();
+  const urlParams =
+    new URLSearchParams(window.location.search);
 
-      document.getElementById("registrationCode").value = cleanCode;
+  const codeFromURL =
+    urlParams.get("code");
 
-      document.getElementById("registrationCode").readOnly = true;
+  if (codeFromURL) {
+    registrationInput.value =
+      codeFromURL.trim().toUpperCase();
+
+    registrationInput.readOnly = true;
+  }
+
+
+  function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.style.display = "block";
+  }
+
+
+  async function readResponse(response) {
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(
+        data.message ||
+        data.error ||
+        "The server could not complete your request."
+      );
+    }
+
+    return data;
+  }
+
+
+  registerForm.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    errorMessage.style.display = "none";
+
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    const confirmPassword =
+      document.getElementById("confirmPassword").value;
+
+    const registrationCode =
+      registrationInput.value.trim().toUpperCase();
+
+
+    if (password !== confirmPassword) {
+      showError("Passwords do not match.");
+      return;
+    }
+
+    if (!registrationCode) {
+      showError("Please enter your registration code.");
+      return;
     }
 
 
-    const registerForm =
-      document.getElementById("registerForm");
-
-    const registerButton =
-      document.getElementById("registerButton");
-
-    const errorMessage =
-      document.getElementById("errorMessage");
+    registerButton.disabled = true;
+    registerButton.textContent = "Checking Registration Code...";
 
 
-    registerForm.addEventListener("submit", async (event) => {
-
-      event.preventDefault();
+    let accountCreated = false;
 
 
-      const email =
-        document.getElementById("email").value.trim();
+    try {
 
-      const password =
-        document.getElementById("password").value;
+      // STEP 1: Validate the registration code.
 
-      const confirmPassword =
-        document.getElementById("confirmPassword").value;
+      const validationResponse = await fetch(
+        `${BACKEND_URL}/api/registration/validate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            registrationCode
+          })
+        }
+      );
 
-      const registrationCode =
-        document.getElementById("registrationCode").value
-          .trim()
-          .toUpperCase();
-
-
-      errorMessage.style.display = "none";
-
-
-      // Check passwords
-      if (password !== confirmPassword) {
-
-        errorMessage.textContent =
-          "Passwords do not match.";
-
-        errorMessage.style.display = "block";
-
-        return;
-      }
+      await readResponse(validationResponse);
 
 
-      // Check registration code
-      if (!plans[registrationCode]) {
+      // STEP 2: Create the Firebase Authentication account.
 
-        errorMessage.textContent =
-          "Invalid registration code.";
+      registerButton.textContent = "Creating Account...";
 
-        errorMessage.style.display = "block";
-
-        return;
-      }
-
-
-      registerButton.disabled = true;
-
-      registerButton.textContent =
-        "Creating Account...";
-
-
-      try {
-
-        /*
-          STEP 1:
-          Create Firebase Authentication account.
-        */
-
-        const userCredential =
-          await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-
-
-        const user =
-          userCredential.user;
-
-
-        /*
-          STEP 2:
-          Create the customer's Firestore profile.
-        */
-
-        await setDoc(
-          doc(db, "users", user.uid),
-          {
-            email: user.email,
-
-            planCode: registrationCode,
-
-            planName: plans[registrationCode].name,
-
-            planPrice: plans[registrationCode].price,
-
-            status: "waiting",
-
-            blocked: false,
-
-            createdAt: serverTimestamp(),
-
-            updatedAt: serverTimestamp()
-          }
+      const userCredential =
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
         );
 
+      accountCreated = true;
 
-        /*
-          STEP 3:
-          Send customer to dashboard.
-        */
-
-        window.location.href =
-          "dashboard.html";
+      const user = userCredential.user;
 
 
-      } catch (error) {
+      // STEP 3: Send the authenticated request to the backend.
 
-        console.error(error);
+      registerButton.textContent = "Setting Up Your Account...";
 
+      const idToken = await user.getIdToken();
 
-        let message =
-          "Unable to create your account. Please try again.";
-
-
-        if (error.code === "auth/email-already-in-use") {
-
-          message =
-            "An account with this email already exists.";
+      const registrationResponse = await fetch(
+        `${BACKEND_URL}/api/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${idToken}`
+          },
+          body: JSON.stringify({
+            registrationCode
+          })
         }
+      );
+
+      await readResponse(registrationResponse);
 
 
-        if (error.code === "auth/invalid-email") {
+      // STEP 4: Registration completed.
 
-          message =
-            "Please enter a valid email address.";
-        }
+      registerButton.textContent = "Account Created!";
 
-
-        if (error.code === "auth/weak-password") {
-
-          message =
-            "Password must be at least 6 characters.";
-        }
+      window.location.href = "dashboard.html";
 
 
-        if (
-          error.code === "permission-denied" ||
-          error.code === "firestore/permission-denied"
-        ) {
+    } catch (error) {
 
-          message =
-            "Your account was created, but your customer profile could not be saved. Please contact support.";
-        }
+      console.error("Registration error:", error);
 
-
-        errorMessage.textContent = message;
-
-        errorMessage.style.display = "block";
+      let message =
+        error.message ||
+        "Unable to create your account. Please try again.";
 
 
-        registerButton.disabled = false;
-
-        registerButton.textContent =
-          "Create Account";
+      if (error.code === "auth/email-already-in-use") {
+        message = "An account with this email already exists.";
       }
 
-    });
+      if (error.code === "auth/invalid-email") {
+        message = "Please enter a valid email address.";
+      }
 
-  </script>
+      if (error.code === "auth/weak-password") {
+        message = "Password must be at least 6 characters.";
+      }
+
+      if (accountCreated) {
+        message =
+          "Your login account was created, but your customer profile setup did not finish. Please contact support before trying to register again.";
+      }
+
+      showError(message);
+
+      registerButton.disabled = false;
+      registerButton.textContent = "Create Account";
+
+    }
+
+  });
+
+</script>
+
 
 </body>
 </html>
