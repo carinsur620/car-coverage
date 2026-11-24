@@ -6,7 +6,7 @@
   <title>Customer Login | PrimeShield</title>
 
   <style>
-    * {
+    * {'
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -348,92 +348,116 @@
   </main>
 
   <!-- NEW FIREBASE PROJECT -->
-  <script type="module">
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<script type="module">
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    import {
-      getAuth,
-      signInWithEmailAndPassword
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
+    authDomain: "carinsurance-784eb.firebaseapp.com",
+    projectId: "carinsurance-784eb",
+    storageBucket: "carinsurance-784eb.firebasestorage.app",
+    messagingSenderId: "181837106063",
+    appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
+    measurementId: "G-0X0VX4Q76R"
+  };
 
-    // NEW PrimeShield Firebase project
-    const firebaseConfig = {
-      apiKey: "AIzaSyB1Xsl0TEikQROPX-rueVtQCFwvdx9FxNY",
-      authDomain: "carinsurance-784eb.firebaseapp.com",
-      projectId: "carinsurance-784eb",
-      storageBucket: "carinsurance-784eb.firebasestorage.app",
-      messagingSenderId: "181837106063",
-      appId: "1:181837106063:web:9357e10fb6738a07a4d9fa",
-      measurementId: "G-0X0VX4Q76R"
-    };
+  const BACKEND_URL =
+    "https://primeshield-backend-mupe.onrender.com";
 
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  const loginForm = document.getElementById("loginForm");
+  const loginButton = document.getElementById("loginButton");
+  const errorMessage = document.getElementById("errorMessage");
 
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-    const loginForm = document.getElementById("loginForm");
-    const loginButton = document.getElementById("loginButton");
-    const errorMessage = document.getElementById("errorMessage");
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
+    errorMessage.style.display = "none";
+    loginButton.disabled = true;
+    loginButton.textContent = "Verifying Account...";
 
-    loginForm.addEventListener("submit", async (event) => {
+    try {
+      // Step 1: Authenticate customer with Firebase.
+      const credential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-      event.preventDefault();
+      // Step 2: Obtain Firebase authentication token.
+      const idToken = await credential.user.getIdToken();
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+      // Step 3: Ask PrimeShield backend to verify the customer.
+      const response = await fetch(`${BACKEND_URL}/api/me`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${idToken}`,
+          "Content-Type": "application/json"
+        }
+      });
 
-      errorMessage.style.display = "none";
+      const result = await response.json();
 
-      loginButton.disabled = true;
-      loginButton.textContent = "Signing In...";
+      if (!response.ok) {
+        await signOut(auth);
 
+        if (response.status === 403) {
+          throw new Error("Your account has been restricted. Please contact support.");
+        }
 
-      try {
+        if (response.status === 404) {
+          throw new Error("Your customer profile could not be found. Please contact support.");
+        }
 
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
+        if (response.status === 401) {
+          throw new Error("Your session could not be verified. Please sign in again.");
+        }
+
+        throw new Error(
+          result.message || "Unable to verify your customer account."
         );
-
-        window.location.href = "dashboard.html";
-
-      } catch (error) {
-
-        console.error(error);
-
-        let message =
-          "Unable to sign in. Please check your email and password.";
-
-        if (
-          error.code === "auth/invalid-credential" ||
-          error.code === "auth/wrong-password" ||
-          error.code === "auth/user-not-found"
-        ) {
-          message = "Invalid email or password.";
-        }
-
-        if (error.code === "auth/too-many-requests") {
-          message =
-            "Too many unsuccessful attempts. Please try again later.";
-        }
-
-        errorMessage.textContent = message;
-        errorMessage.style.display = "block";
-
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In";
       }
 
-    });
+      // Step 4: Customer is authenticated and profile is verified.
+      window.location.href = "dashboard.html";
 
-  </script>
+    } catch (error) {
+      console.error("Login error:", error);
+
+      let message =
+        "Unable to sign in. Please check your email and password.";
+
+      if (error.code === "auth/invalid-credential") {
+        message = "Invalid email or password.";
+      } else if (error.code === "auth/too-many-requests") {
+        message = "Too many unsuccessful attempts. Please try again later.";
+      } else if (error.message) {
+        message = error.message;
+      }
+
+      errorMessage.textContent = message;
+      errorMessage.style.display = "block";
+
+      loginButton.disabled = false;
+      loginButton.textContent = "Sign In";
+    }
+  });
+</script>
+
 
 </body>
 </html>
