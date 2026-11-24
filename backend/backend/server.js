@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import admin from "firebase-admin";
+import { readFileSync } from "node:fs";
 
 dotenv.config();
 
@@ -17,28 +18,29 @@ const allowedOrigins = (
   .map((origin) => origin.trim())
   .filter(Boolean);
 
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Origin not allowed by CORS"));
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
     }
-  })
-);
+    return callback(new Error("Origin not allowed by CORS"));
+  }
+}));
 
 app.use(express.json({ limit: "100kb" }));
 
-// Firebase Admin connection
-if (!process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
-  throw new Error("Firebase service account is not configured.");
-}
+// Load Firebase credentials from Render Secret Files.
+const credentialsPath =
+  process.env.FIREBASE_SERVICE_ACCOUNT_FILE ||
+  "/etc/secrets/primeshield-firebase-admin.json";
 
 const serviceAccount = JSON.parse(
-  process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+  readFileSync(credentialsPath, "utf8")
 );
+
+if (serviceAccount.project_id !== "carinsurance-784eb") {
+  throw new Error("Firebase service account belongs to the wrong project.");
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -47,7 +49,6 @@ admin.initializeApp({
 const db = admin.firestore();
 const firebaseAuth = admin.auth();
 
-// API health check
 app.get("/api/health", (req, res) => {
   res.json({
     success: true,
@@ -56,7 +57,6 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Verify customer authentication
 async function authenticateCustomer(req, res, next) {
   try {
     const authorization = req.headers.authorization || "";
@@ -68,8 +68,9 @@ async function authenticateCustomer(req, res, next) {
       });
     }
 
-    const token = authorization.slice(7);
-    req.customer = await firebaseAuth.verifyIdToken(token);
+    req.customer = await firebaseAuth.verifyIdToken(
+      authorization.slice(7)
+    );
 
     next();
   } catch (error) {
@@ -82,14 +83,11 @@ async function authenticateCustomer(req, res, next) {
   }
 }
 
-// Retrieve the authenticated customer's profile
 app.get("/api/me", authenticateCustomer, async (req, res) => {
   try {
-    const uid = req.customer.uid;
-
     const snapshot = await db
       .collection("users")
-      .doc(uid)
+      .doc(req.customer.uid)
       .get();
 
     if (!snapshot.exists) {
@@ -121,7 +119,7 @@ app.get("/api/me", authenticateCustomer, async (req, res) => {
       }
     });
   } catch (error) {
-    console.error("Profile error:", error);
+    console.error("Profile error:", error.message);
 
     return res.status(500).json({
       success: false,
@@ -130,7 +128,6 @@ app.get("/api/me", authenticateCustomer, async (req, res) => {
   }
 });
 
-// Unknown API routes
 app.use("/api", (req, res) => {
   res.status(404).json({
     success: false,
@@ -138,6 +135,6 @@ app.use("/api", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`PrimeShield backend running on port ${PORT}`);
 });
